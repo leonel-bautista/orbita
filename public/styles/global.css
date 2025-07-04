@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root{
+    /* colores basicos */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    /* azules */
+    --color-pale-blue: #508991;
+    --color-lighter-blue: #6BBEFF;
+    --color-light-blue: #1bb2cc;
+    --color-blue: #2374c6;
+    --color-dark-blue: #172a3a;
+    --color-darker-blue: #1b1c1d;
+    /* cianes */
+    --color-pale-cyan: #75dddd;
+    --color-light-cyan: #0ddfd1;
+    --color-cyan: #147c8e;
+    --color-dark-cyan: #004346;
+    /* grises */
+    --color-pale-gray: #f3f9ff;
+    --color-gray: #a3abbd;
+    --color-dark-gray: #5a6477;
+    --color-darker-gray: #3f4756;
+}
+
+*, *::before, *::after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Lucida Grande', 'Lucida Sans', Arial, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+}
+
+@media (prefers-color-scheme: dark){
+    body{
+        color: var(--color-white);
+        background-color: var(--color-black);
+    }
+}
+@media (prefers-color-scheme: light){
+    body{
+        color: var(--color-black);
+        background-color: var(--color-white);
+    }
+}
