@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Iniciá sesión en Órbita para seguir jugando. Accedé rápido y seguro a tu cuenta.">
+
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/pages/login.css">
+
+    <script type="module" src="../scripts/main.js"></script>
+    <script type="module" src="../scripts/pages/login.js"></script>
+
+    <title>Órbita ⪼ Iniciar Sesión</title>
+
+</head>
+<body>
+    <main>
+        <section id="login-section">
+            <orbi-logo></orbi-logo>
+            
+            <h2>
+                Inicia sesión a tu cuenta.
+            </h2>
+            <p>
+                No tienes cuenta?
+                <a href="/register">Regístrate</a>
+                para empezar.
+            </p>
+            
+            <form novalidate>
+                <div class="input-container">
+                    <label for="email-input">Correo electrónico</label>
+                    <input id="email-input" name="email" type="email" autocomplete="email" placeholder="">
+                </div>
+                <div class="input-container">
+                    <label for="pw-input">Contraseña</label>
+                    <input id="pw-input" name="password" type="password" autocomplete="current-password" placeholder="">
+                    <div class="btn-container">
+                        <button type="button" id="toggle-pw-btn">
+                            <orbi-icon name="show"></orbi-icon>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" disabled>
+                    <orbi-icon name="enter"></orbi-icon>
+                    <span>INICIAR SESIÓN</span>
+                </button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

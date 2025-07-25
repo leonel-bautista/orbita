@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
 
 :root{
+    /* fuente por defecto */
+    --font-default: 'Rajdhani', 'Inter', 'Lucida Grande', 'Lucida Sans', Arial, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-legible: 'Inter', sans-serif;
+
     /* colores basicos */
     --color-white: #ffffff;
+    --rgb-white: 255, 255, 255;
     --color-black: #000000;
+    --rgb-black: 0, 0, 0;
     /* azules */
     --color-pale-blue: #508991;
     --color-lighter-blue: #6BBEFF;
@@ -16,18 +24,32 @@
     --color-light-cyan: #0ddfd1;
     --color-cyan: #147c8e;
     --color-dark-cyan: #004346;
+    --color-darker-cyan: #1a2224;
     /* grises */
-    --color-pale-gray: #f3f9ff;
+    --color-light-gray: #f3f9ff;
     --color-gray: #a3abbd;
     --color-dark-gray: #5a6477;
     --color-darker-gray: #3f4756;
+    /* rojos */
+    --color-pale-red: #ffb7b7;
+    --color-lighter-red: #fd4141;
+    --color-red: #ff0000;
+
+    /* patrones de fondo */
+    --pattern-stars:
+        radial-gradient(circle, var(--color-dark-gray) 1px, transparent 1px)
+            repeat 20px 30px/97px 103px,
+        radial-gradient(circle, var(--color-darker-blue) 1.5px, transparent 1.5px)
+            repeat 100px 150px/151px 148px,
+        radial-gradient(circle, var(--color-darker-blue) 2px, transparent 2px)
+            repeat 300px 250px/198px 202px;
 }
 
 *, *::before, *::after{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Inter', 'Lucida Grande', 'Lucida Sans', Arial, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+    font-family: var(--font-default);
 }
 
 @media (prefers-color-scheme: dark){

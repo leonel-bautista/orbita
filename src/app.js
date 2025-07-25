@@ -20,6 +20,16 @@ app.get('/', (req, res) => {
     const indexPath = path.join(__dirname, '..', 'public', 'views', 'index.html');
     res.sendFile(indexPath);
 })
+// REGISTRO
+app.get('/register', (req, res) => {
+    const registerPath = path.join(__dirname, '..', 'public', 'views', 'register.html');
+    res.sendFile(registerPath);
+})
+// LOGIN
+app.get('/login', (req, res) => {
+    const loginPath = path.join(__dirname, '..', 'public', 'views', 'login.html');
+    res.sendFile(loginPath);
+})
 
 // --- PRENDER SERVER ---
 app.listen(PORT, () => {
