@@ -4,36 +4,7 @@ const password = document.querySelector('#pw-input');
 const togglePwBtn = document.querySelector('#toggle-pw-btn');
 const submitBtn = document.querySelector('#submit-btn');
 
-// BBDD DE PRUEBA
-function simulateLatency(min = 2200, max = 3200) {
-    const delay = min + Math.random() * (max - min);
-    return new Promise(r => setTimeout(r, delay));
-}
-const fakeDB = (() => {
-    const users = [
-        { id: 1, email: 'leo@example.com', password: 'puedeser' },
-        { id: 2, email: 'bran@example.com', password: 'nomelase' },
-    ];
-
-    return {
-        findByEmail(email){
-            return users.find(user => user.email === email) || null;
-        },
-
-        async register(email, password){
-            await new Promise(r => setTimeout(r, 200 + Math.random() * 300));
-
-            if (!email || !password) return { error: true }
-
-            const user = this.findByEmail(email);
-            if (user)
-                return { duped_email: true };
-
-            return { message: 'REGISTRO EXITOSO', id: Date.now(), email, password };
-        },
-    };
-})();
-// 
+const API = "http://api.app.test:4000";
 
 // MENSAJES DE ERROR
 const ERR_MESSAGES = {
@@ -76,17 +47,43 @@ const fields = [email, password];
 function emailExistanceChecker(){
     let lastValue = "";
     let lastChecked = false;
+    let controller = null;
 
     return async function checkEmail(container, value){
         if (value === lastValue) return lastChecked;
         lastValue = value;
 
-        toggleSpinner(container, true, [email, submitBtn]);
-        
-        await simulateLatency();
+        controller?.abort();
+        controller = new AbortController();
 
-        lastChecked = !!fakeDB.findByEmail(value);
-        toggleSpinner(container, false, [email, submitBtn]);
+        toggleSpinner(container, true, [email, submitBtn]);
+
+        try{
+            const res = await fetch(`${API}/auth/find-user`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: value })
+            });
+
+            if (!res.ok){
+                lastChecked = false;
+            }
+            else{
+                const { exists } = await res.json();
+                lastChecked = exists;
+            }
+        }
+        catch (error){
+            if (error.name !== 'AbortError'){
+                lastChecked = false;
+            }
+        }
+        finally{
+            toggleSpinner(container, false, [email, submitBtn]);
+        }
+
         return lastChecked;
     }
 }
@@ -165,8 +162,23 @@ function disableWhitespace(e){
 }
 
 async function registerAccount(email, password){
-    await simulateLatency();
-    return await fakeDB.register(email, password);
+    const DATA = {
+        email: email,
+        password: password,
+        next: new URLSearchParams(window.location.search).get("next") || ""
+    }
+
+    const res = await fetch(`${API}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        credentials: 'include',
+        body: JSON.stringify(DATA)
+    })
+    const body = await res.json();
+
+    return { status: res.status, body: body };
 }
 
 // EVENTOS
@@ -209,16 +221,17 @@ form.addEventListener('submit', async (e) => {
     toggleSpinner(submitBtn, true, controls);
 
     try{
-        const res = await registerAccount(email.value, password.value);
+        const { status, body } = await registerAccount(email.value, password.value);
 
-        if (res.error || res.duped_email){
+        if (status !== 201){
             toggleSpinner(submitBtn, false, controls);
 
-            if (res.duped_email) return showError(email.closest('.input-container'), ERR_MESSAGES.EXISTING_EMAIL);
-            else return showError(form, ERR_MESSAGES.BAD_REGISTER);
-        }
+            if (body.user_exists) return showError(email.closest('.input-container'), ERR_MESSAGES.EXISTING_EMAIL);
 
+            return showError(form, ERR_MESSAGES.BAD_REGISTER);
+        }
         toggleSpinner(submitBtn, false);
+        window.location.href = body.redirect || "/";
     }
     catch{
         toggleSpinner(submitBtn, false, controls);

@@ -12,12 +12,11 @@
         "svg:optimize": "svgo -f ./public/assets/icons -o ./public/assets/icons",
         "build:sprite": "svgstore public/assets/icons/*.svg -o public/assets/sprite.svg"
     },
-    "_moduleAliases": {
-        "@config": "src/server/config",
-        "@controllers": "src/server/controllers",
-        "@middlewares": "src/server/middlewares",
-        "@models": "src/server/models",
-        "@routes": "src/server/routes"
+    "imports": {
+        "#config/*": "./src/server/config/*.js",
+        "#controllers/*": "./src/server/controllers/*.js",
+        "#middlewares/*": "./src/server/middlewares/*.js",
+        "#routes/*": "./src/server/routes/*.js"
     },
     "dependencies": {
         "bcryptjs": "^3.0.2",
@@ -26,7 +25,6 @@
         "dotenv": "^17.0.1",
         "express": "^5.1.0",
         "jsonwebtoken": "^9.0.2",
-        "module-alias": "^2.2.3",
         "multer": "^2.0.1",
         "mysql2": "^3.14.1"
     },

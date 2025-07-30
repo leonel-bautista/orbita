@@ -4,39 +4,7 @@ const password = document.querySelector('#pw-input');
 const togglePwBtn = document.querySelector('#toggle-pw-btn');
 const submitBtn = document.querySelector('#submit-btn');
 
-// 
-// BBDD DE PRUEBA
-function simulateLatency(min = 2200, max = 2800) {
-  const delay = min + Math.random() * (max - min);
-  return new Promise(r => setTimeout(r, delay));
-}
-const fakeDB = (() => {
-    const users = [
-        { id: 1, email: 'leo@example.com', password: 'puedeser' },
-        { id: 2, email: 'bran@example.com', password: 'nomelase' },
-    ];
-
-    return {
-        findByEmail(email){
-            return users.find(user => user.email === email) || null;
-        },
-
-        async login(email, password){
-            await new Promise(r => setTimeout(r, 200 + Math.random() * 300));
-
-            if (!email || !password) return { error: true }
-
-            const user = this.findByEmail(email);
-            if (!user)
-                return { not_found: true };
-            if (user.password !== password)
-                return { not_found: true };
-
-            return { message: 'LOGIN EXITOSO', user };
-        }
-    };
-})();
-// 
+const API = "http://api.app.test:4000";
 
 // MENSAJES DE ERROR
 const ERR_MESSAGES = {
@@ -50,7 +18,6 @@ const ERR_MESSAGES = {
     BAD_CREDENTIALS: "Verifique que el correo y/o contraseña sean correctos.",
     BAD_LOGIN: "Hubo un problema al iniciar sesión, vuelva a intentarlo.",
 }
-
 // VALIDACIONES DEL FORM
 const validators = {
     email: (value) => {
@@ -137,8 +104,23 @@ function disableWhitespace(e){
 }
 
 async function loginAccount(email, password){
-    await simulateLatency();
-    return await fakeDB.login(email, password);
+    const data = {
+        email: email,
+        password: password,
+        next: new URLSearchParams(window.location.search).get("next") || ""
+    }
+
+    const res = await fetch(`${API}/auth/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(data)
+    })
+    const body = await res.json();
+
+    return { status: res.status, body: body };
 }
 
 // EVENTOS
@@ -180,17 +162,17 @@ form.addEventListener('submit', async (e) => {
     toggleSpinner(submitBtn, true, controls);
 
     try{
-        const res = await loginAccount(email.value, password.value);
+        const { status, body } = await loginAccount(email.value, password.value);
 
-        if (res.error || res.not_found){
+        if (status !== 201){
             toggleSpinner(submitBtn, false, controls);
 
-            const msg = res.not_found ? ERR_MESSAGES.BAD_CREDENTIALS
-                                      : ERR_MESSAGES.BAD_LOGIN;
-            return showError(form, msg);
-        }
+            if (body.not_found) return showError(form, ERR_MESSAGES.BAD_CREDENTIALS);
 
+            return showError(form, ERR_MESSAGES.BAD_LOGIN);
+        }
         toggleSpinner(submitBtn, false);
+        window.location.href = body.redirect || "/";
     }
     catch{
         toggleSpinner(submitBtn, false, controls);
