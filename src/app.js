@@ -51,7 +51,7 @@ apiApp.use('/auth', authRoutes);
 const mainApp = express();
 mainApp.use(express.static(publicDir));
 
-mainApp.get('/', userOnly, (req, res) => res.sendFile(path.join(viewsDir, 'index.html')));
+mainApp.get('/', (req, res) => res.sendFile(path.join(viewsDir, 'index.html')));
 mainApp.get('/register', (req, res) => res.sendFile(path.join(viewsDir, 'register.html')));
 mainApp.get('/login', (req, res) => res.sendFile(path.join(viewsDir, 'login.html')));
 

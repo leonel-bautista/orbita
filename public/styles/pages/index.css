@@ -1,0 +1,14 @@
+body > main{
+    min-height: 100vh;
+    background:
+        radial-gradient(circle 100vw at 0 0, rgba(var(--rgb-black), 0.8), transparent),
+        radial-gradient(circle 100vw at 0 200vw, rgba(var(--rgb-black), 0.8), transparent),
+        radial-gradient(circle 100vw at 100vw 100vw, rgba(var(--rgb-black), 1), transparent),
+        linear-gradient(to bottom, var(--color-dark-blue), var(--color-dark-cyan), var(--color-dark-blue));
+    background-size: 100vw 200vw;
+}
+
+body > header{
+    width: 100%;
+    position: fixed;
+}

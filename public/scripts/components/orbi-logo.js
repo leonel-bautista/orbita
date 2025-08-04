@@ -48,6 +48,9 @@ const logoStyle = `
         fill: var(--fill-trail);
         stroke: var(--stroke-trail);
         filter: var(--filter-trail);
+        
+        -webkit-mask-image: linear-gradient(to left, black 70%, transparent 100%);
+        mask-image: linear-gradient(to left, black 70%, transparent 100%);
     }
 `;
 const template = document.createElement('template');

@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 
 const {
-     JWT_SECRET,
-     FRONT_URL,
-     COOKIE_NAME,
-     ADMIN_URL
+    JWT_SECRET,
+    FRONT_URL,
+    COOKIE_NAME,
+    ADMIN_URL
 } = process.env;
 
 function extractToken(req){
@@ -15,7 +15,7 @@ function extractToken(req){
     return req.cookies?.[COOKIE_NAME]
 }
 function buildNextAbsolute(req) {
-    const host = (req.get('X-Forwarded-Host') || req.get('Host')).split(':')[0];
+    const host = (req.get('X-Forwarded-Host') || req.get('Host'));
     const origin = `${req.protocol}://${host}`;
     return encodeURIComponent(origin + req.originalUrl);
 }

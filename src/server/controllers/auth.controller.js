@@ -17,6 +17,9 @@ const {
 
 const salt = parseInt(SALT_ROUNDS) || 10;
 
+const FRONT_ORIGIN = new URL(FRONT_URL).origin;
+const ADMIN_ORIGIN = new URL(ADMIN_URL).origin;
+
 function rngString(length){
     let str = "";
     for (let i = 0; i < length; i++){
@@ -24,28 +27,53 @@ function rngString(length){
     }
     return str;
 }
-function safeRedirect(path){
+function safeRedirect(nextURL, currentOrigin) {
+    const fallback = "/";
+
+    if (typeof nextURL !== "string") return fallback;
+
+    let decodedNext;
+    try{ decodedNext = decodeURIComponent(nextURL); }
+    catch{ decodedNext = nextURL; }
+
     try{
-        if (typeof path === 'string' && path.startsWith('/')) return path;
-        const url = new URL(path);
-        if (
-            url.hostname === ADMIN_URL.replace(/^https?:\/\//, '').split(':')[0] ||
-            url.hostname === FRONT_URL.replace(/^https?:\/\//, '').split(':')[0]
-        ){
-            return url.pathname + url.search;
+        const url = new URL(decodedNext);
+
+        if (url.origin === FRONT_ORIGIN || url.origin === ADMIN_ORIGIN){
+            if (url.origin === currentOrigin){
+                const out = url.pathname + url.search;
+                return out;
+            }
+
+            return url.href;
         }
     } catch{}
 
-    return '/';
+    if (decodedNext.startsWith("/")){
+        if (currentOrigin === ADMIN_ORIGIN){
+            const out = ADMIN_ORIGIN + decodedNext;
+            return out;
+        }
+
+        return decodedNext;
+    }
+
+    return fallback;
 }
 
 // --- MÉTODO GET ---
 export const findUserByEmail = (req, res) => {
+    if (!db) {
+        return res
+                .status(500)
+                .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+    }
+
     const { email } = req.body;
     const sql = `
         SELECT COUNT(*) as users_found FROM users WHERE email = ?
     `;
-    db.query(sql, [email], (error ,result) => {
+    db.query(sql, [email], (error, result) => {
         if (error){
             return res
                 .status(500)
@@ -57,14 +85,56 @@ export const findUserByEmail = (req, res) => {
     })
 }
 export const getProfile = (req, res) => {
-    const { id, username, auth } = req.user;
-    const user = { id, username, auth };
-    return res.json(user);
+    if (!db) {
+        return res
+            .status(500)
+            .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+    }
+    if (!req.user){
+        return res
+            .status(401)
+            .json({ error: "(❌) ERROR: No autenticado." });
+    }
+
+    const { id } = req.user;
+    const sql = `
+        SELECT user_id, user_name, user_alias, user_image, tier_name, email
+        FROM users JOIN tiers ON users.tier_id = tiers.tier_id
+        WHERE user_id = ? LIMIT 1
+    `;
+    db.query(sql, [id], (error, result) => {
+        if (error){
+            return res
+                .status(500)
+                .json({ error: "(❌) ERROR: Vuelva a intentarlo más tarde" });
+        }
+        if (result.length === 0){
+            return res
+                .status(404)
+                .json({ error: "(❌) ERROR: Usuario no encontrado." });
+        }
+        const u = result[0];
+
+        return res.json({
+            id: u.user_id,
+            name: u.user_name,
+            alias: u.user_alias,
+            image: u.user_image,
+            tier: u.tier_name,
+            email: u.email
+        });
+    })
 };
 
 // --- MÉTODO POST ---
 export const register = (req, res) => {
-    const { email, password, next } = req.body;
+    if (!db) {
+        return res
+                .status(500)
+                .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+    }
+
+    const { email, password } = req.body;
     const checkUser = `
         SELECT COUNT(*) as found FROM users WHERE email = ? LIMIT 1
     `;
@@ -121,7 +191,9 @@ export const register = (req, res) => {
             };
             res.cookie(COOKIE_NAME, token, cookieOptions);
 
-            const redirectPath = safeRedirect(next);
+            const { next } = req.body;
+            const currentOrigin = `${req.protocol}://${req.get('host')}`;
+            const redirectPath = safeRedirect(next, currentOrigin);
 
             return res
                 .status(201)
@@ -134,7 +206,13 @@ export const register = (req, res) => {
     })
 }
 export const login = (req, res) => {
-    const { email, password, next } = req.body;
+    if (!db) {
+        return res
+                .status(500)
+                .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+    }
+
+    const { email, password } = req.body;
     const findUser = `
         SELECT user_id, user_name, password FROM users WHERE email = ?
     `;
@@ -195,19 +273,9 @@ export const login = (req, res) => {
             };
             res.cookie(COOKIE_NAME, token, cookieOptions);
 
-            let redirectPath = safeRedirect(next);
-            let isAdminNext = false;
-
-            if (next){
-                try{
-                    const url = new URL(next, ADMIN_URL);
-                    isAdminNext = url.hostname === new URL(ADMIN_URL).hostname;
-                } catch{}
-            }
-
-            if (auth === "admin" && isAdminNext && !redirectPath.startsWith('http')){
-                redirectPath = `${ADMIN_URL}${redirectPath}`;
-            }
+            const { next } = req.body;
+            const currentOrigin = `${req.protocol}://${req.get('host')}`;
+            const redirectPath = safeRedirect(next, currentOrigin);
 
             return res
                 .status(201)
