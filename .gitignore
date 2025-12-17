@@ -1,0 +1,10 @@
+# NODE.JS
+node_modules
+.env
+
+# uploaded files
+src/uploads/**/*
+!src/uploads/games/
+!src/uploads/users/
+!src/uploads/games/.gitkeep
+!src/uploads/users/.gitkeep

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Órbita</title>
+
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/pages/index.css">
+
+    <script type="module" src="../scripts/main.js"></script>
+    <script type="module" src="../scripts/pages/index.js"></script>
+</head>
+<body>
+    <header>
+        <orbi-nav></orbi-nav>
+    </header>
+
+    <orbi-panel></orbi-panel>
+
+    <main>
+        <section id="hero">
+            <h2 class="title">TU UNIVERSO DE JUEGOS <span>EN ÓRBITA.</span></h2>
+
+            <div class="bg-waves wave-1" aria-hidden="true"><svg><use href="../assets/bgs/waves.svg#wave-1"></use></svg></div>
+            <div class="bg-waves wave-2" aria-hidden="true"><svg><use href="../assets/bgs/waves.svg#wave-2"></use></svg></div>
+            <div class="bg-waves wave-3" aria-hidden="true"><svg><use href="../assets/bgs/waves.svg#wave-3"></use></svg></div>
+        </section>
+
+        <section id="intro">
+            <h3 class="title">EXPLORA NUEVAS FRONTERAS <span>SIN LÍMITES</span></h3>
+            <ul class="features-list">
+                <li class="item">
+                    <div class="bg-feature-item" aria-hidden="true"><svg><use href="../assets/bgs/gamepad.svg"></use></svg></div>
+                    <h4 class="subtitle">juega en cualquier dispositivo</h4>
+                    <span class="text">accede desde navegador, app móvil o TV y continúa donde quieras.</span>
+                </li>
+                <li class="item">
+                    <div class="bg-feature-item" aria-hidden="true"><svg><use href="../assets/bgs/cloud.svg"></use></svg></div>
+                    <h4 class="subtitle">sin descargas ni actualizaciones</h4>
+                    <span class="text">tus juegos se ejecutan en la nube; tu dispositivo solo recibe la imagen.</span>
+                </li>
+                <li class="item">
+                    <div class="bg-feature-item" aria-hidden="true"><svg><use href="../assets/bgs/stacks.svg"></use></svg></div>
+                    <h4 class="subtitle">compatibilidad con tus librerías</h4>
+                    <span class="text">conecta tus cuentas de tiendas donde ya compraste los juegos.</span>
+                </li>
+                <li class="item">
+                    <div class="bg-feature-item" aria-hidden="true"><svg><use href="../assets/bgs/control.svg"></use></svg></div>
+                    <h4 class="subtitle">control y transparencia</h4>
+                    <span class="text">estadísticas de sesión y opciones claras para pausar o cancelar cuando quieras.</span>
+                </li>
+            </ul>
+
+            <div class="bg-waves wave-4" aria-hidden="true"><svg><use href="../assets/bgs/waves.svg#wave-4"></use></svg></div>
+        </section>
+
+        <section id="games">
+            <h2 class="title">ELIGE TU JUEGO, <span>DESPEGA AL INSTANTE.</span></h2>
+
+            <div class="carousel" aria-hidden="true">
+                <ul class="carousel-track">
+                    <li class="track-item" style="--i:1"></li>
+                    <li class="track-item" style="--i:2"></li>
+                    <li class="track-item" style="--i:3"></li>
+                    <li class="track-item" style="--i:4"></li>
+                </ul>
+                <ul class="carousel-track">
+                    <li class="track-item" style="--i:1"></li>
+                    <li class="track-item" style="--i:2"></li>
+                    <li class="track-item" style="--i:3"></li>
+                    <li class="track-item" style="--i:4"></li>
+                </ul>
+                <ul class="carousel-track">
+                    <li class="track-item" style="--i:1"></li>
+                    <li class="track-item" style="--i:2"></li>
+                    <li class="track-item" style="--i:3"></li>
+                    <li class="track-item" style="--i:4"></li>
+                </ul>
+            </div>
+
+            <div class="bg-waves wave-5" aria-hidden="true"><svg><use href="../assets/bgs/waves.svg#wave-1"></use></svg></div>
+        </section>
+
+        <section id="devices">
+            <h2 class="title">A CUALQUIER PARTE, <span>EN CUALQUIER DISPOSITIVO.</span></h2>
+
+            <div class="multiple-devices-img" aria-hidden="true">
+                <img src="../assets/images/multiple-devices.webp" alt="">
+            </div>
+
+            <div class="devices-container">
+                <button type="button" id="device-left-btn">
+                    <orbi-icon name="arrow-back"></orbi-icon>
+                </button>
+                <button type="button" id="device-right-btn">
+                    <orbi-icon name="arrow-back"></orbi-icon>
+                </button>
+
+                <ul class="devices-list">
+                    <li class="item">
+                        <img src="../assets/images/devices/windows.svg" alt="Navegador Web">
+                        <h4>Windows</h4>
+                        <span>Laptop y Escritorio</span>
+                    </li>
+                    <li class="item">
+                        <img src="../assets/images/devices/mac-os.svg" alt="Navegador Web">
+                        <h4>macOS</h4>
+                        <span>iMac, Macbook, Mac Pro</span>
+                    </li>
+                    <li class="item">
+                        <img src="../assets/images/devices/chrome-web.svg" alt="Navegador Web">
+                        <h4>Navegador Chrome</h4>
+                        <span>Chromebook, PC y Mac</span>
+                    </li>
+                    <li class="item">
+                        <img src="../assets/images/devices/safari-web.svg" alt="Navegador Web">
+                        <h4>Navegador Safari</h4>
+                        <span>iPhone o iPad</span>
+                    </li>
+                    <li class="item">
+                        <img src="../assets/images/devices/android.svg" alt="Navegador Web">
+                        <h4>Android</h4>
+                        <span>Teléfono o Tablet</span>
+                    </li>
+                    <li class="item">
+                        <img src="../assets/images/devices/android-tv.svg" alt="Navegador Web">
+                        <h4>Android TV</h4>
+                        <span>Chromecast con Google TV, Sony TV y más</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-waves wave-6" aria-hidden="true"><svg><use href="../assets/bgs/waves.svg#wave-4"></use></svg></div>
+        </section>
+
+        <section id="get-started">
+            <h2 class="title">EMPIEZA YA <span>TU VIAJE.</span></h2>
+            <a href="/planes" class="subscriptions-link">
+                <span>VER PLANES</span>
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <orbi-logo></orbi-logo>
+        <span>Sitio creado por <a href="https://github.com/leonel-bautista/orbita" target="_blank">Leonel Bautista</a></span>
+        <p>&copy; 2025 Órbita. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

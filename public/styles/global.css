@@ -1,0 +1,96 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+
+:root {
+    --font-text: 'Nunito', sans-serif;
+    --font-input: 'Nunito', sans-serif;
+    --font-title: 'Fredoka', sans-serif;
+
+    --color-error: oklch(0.8465 0.084 18.96);
+
+    --color-primary-900: oklch(.65 .15 22);
+    --color-primary-800: oklch(from var(--color-primary-900) calc(l * .85) c h);
+    --color-primary-700: oklch(from var(--color-primary-900) calc(l * .7) c h);
+
+    --color-secondary-900: oklch(0.235 0.065 290);
+    --color-secondary-800: oklch(from var(--color-secondary-900) calc(l * .8) c h);
+    --color-secondary-700: oklch(from var(--color-secondary-900) calc(l * .6) c h);
+
+    --color-tertiary-900: oklch(.9 .12 90);
+    --color-tertiary-800: oklch(from var(--color-tertiary-900) calc(l * .85) c calc(h * .9));
+    --color-tertiary-700: oklch(from var(--color-tertiary-900) calc(l * .7) c calc(h * .8));
+
+    --color-border: oklch(from var(--color-primary-900) calc(l * .65) c calc(h * .85));
+    --color-text: oklch(.9 .015 300);
+    --color-text-alt: oklch(.15 .015 300);
+    --color-text-muted: oklch(from var(--color-text) calc(l * .75) c h);
+
+    --color-bg: oklch(0.1 0.065 290);
+    --color-bg-light: oklch(from var(--color-bg) calc(l * 1.15) c h);
+    --color-bg-dark: oklch(from var(--color-bg) calc(l * .75) c h);
+}
+
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100dvw;
+    min-height: 100dvh;
+    color: var(--color-text) !important;
+    background-color: var(--color-bg-dark);
+    font-family: var(--font-text) !important;
+
+    overflow-x: hidden;
+
+    &, * {
+        &::-webkit-scrollbar {
+            width: 1em;
+            z-index: -1;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background-color: var(--color-primary-700);
+            border: .35em solid transparent;
+            background-clip: content-box;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: var(--color-primary-900);
+        }
+    }
+}
+body > header {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+}
+body > main {
+    min-height: 100dvh;
+}
+body > footer {
+    min-height: 450px;
+    gap: 2em;
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    place-content: center;
+    place-items: center;
+    background-color: var(--color-bg-dark);
+
+    orbi-logo { opacity: .3; }
+    span a {
+        color: var(--color-tertiary-900);
+        &:hover, &:focus-visible {
+            text-decoration: none;
+        }
+    }
+    p { color: var(--color-text-muted); }
+}

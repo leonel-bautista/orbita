@@ -1,0 +1,35 @@
+{
+    "name": "orbita",
+    "version": "1.0.0",
+    "description": "Proyecto académico de una plataforma de juegos en la nube.",
+    "author": "Leo",
+    "license": "MIT",
+    "type": "module",
+    "main": "src/app.js",
+    "scripts": {
+        "start": "node src/app.js",
+        "watch": "node --watch src/app.js",
+        "svg:optimize": "svgo -f ./public/assets/icons -o ./public/assets/icons",
+        "build:sprite": "svgstore public/assets/icons/*.svg -o public/assets/sprite.svg"
+    },
+    "imports": {
+        "#config/*": "./src/server/config/*.js",
+        "#controllers/*": "./src/server/controllers/*.js",
+        "#middlewares/*": "./src/server/middlewares/*.js",
+        "#routes/*": "./src/server/routes/*.js"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.2",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^17.0.1",
+        "express": "^5.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "multer": "^2.0.1",
+        "mysql2": "^3.14.1"
+    },
+    "devDependencies": {
+        "svgo": "^4.0.0",
+        "svgstore-cli": "^2.0.1"
+    }
+}
