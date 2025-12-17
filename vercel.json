@@ -7,20 +7,14 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/public/$1"
-    }
-  ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://api.tudominio/$1"
+      "source": "/api/:path*",
+      "destination": "https://nextone.alwaysdata.net/api/:path*"
     },
     {
-      "source": "/admin/(.*)",
-      "destination": "https://admin.tudominio/$1"
+      "source": "/admin/:path*",
+      "destination": "https://nextone.alwaysdata.net/admin/:path*"
     }
   ],
   "cleanUrls": true,
