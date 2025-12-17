@@ -1,10 +1,14 @@
+import '../components/orbi-logo.js'
+import '../components/orbi-icon.js'
+import '../components/orbi-error.js'
+
+import { register, findUserByEmail } from "../client.js";
+
 const form = document.querySelector('form');
 const email = document.querySelector('#email-input');
 const password = document.querySelector('#pw-input');
 const togglePwBtn = document.querySelector('#toggle-pw-btn');
 const submitBtn = document.querySelector('#submit-btn');
-
-const API = "http://api.app.test:4000";
 
 // MENSAJES DE ERROR
 const ERR_MESSAGES = {
@@ -41,15 +45,15 @@ const validators = {
         return "";
     },
 }
-const fields = [email, password];
+const fields = [ email, password ];
 
 // FUNCIONES
-function emailExistanceChecker(){
+function emailExistanceChecker() {
     let lastValue = "";
     let lastChecked = false;
     let controller = null;
 
-    return async function checkEmail(container, value){
+    return async function checkEmail(container, value) {
         if (value === lastValue) return lastChecked;
         lastValue = value;
 
@@ -58,30 +62,17 @@ function emailExistanceChecker(){
 
         toggleSpinner(container, true, [email, submitBtn]);
 
-        try{
-            const res = await fetch(`${API}/auth/find-user`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email: value })
-            });
+        try {
+            const res = await findUserByEmail(value)
 
-            if (!res.ok){
-                lastChecked = false;
-            }
-            else{
-                const { exists } = await res.json();
-                lastChecked = exists;
-            }
+            res.ok ? lastChecked = res.body.exists
+                   : lastChecked = false
         }
-        catch (error){
-            if (error.name !== 'AbortError'){
-                lastChecked = false;
-            }
+        catch (error) {
+            if (error.name !== 'AbortError') lastChecked = false;
         }
-        finally{
-            toggleSpinner(container, false, [email, submitBtn]);
+        finally {
+            toggleSpinner(container, false, [ email, submitBtn ]);
         }
 
         return lastChecked;
@@ -162,23 +153,18 @@ function disableWhitespace(e){
 }
 
 async function registerAccount(email, password){
-    const DATA = {
+    const data = {
         email: email,
         password: password,
         next: new URLSearchParams(window.location.search).get("next") || ""
     }
 
-    const res = await fetch(`${API}/auth/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type" : "application/json"
-        },
-        credentials: 'include',
-        body: JSON.stringify(DATA)
-    })
-    const body = await res.json();
+    const res = await register(data);
 
-    return { status: res.status, body: body };
+    return {
+        status: res.status,
+        body: res.body
+    }
 }
 
 // EVENTOS

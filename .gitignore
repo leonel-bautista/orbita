@@ -4,7 +4,7 @@ node_modules
 
 # uploaded files
 src/uploads/**/*
-!src/uploads/games/ 
+!src/uploads/games/
 !src/uploads/users/
 !src/uploads/games/.gitkeep
 !src/uploads/users/.gitkeep

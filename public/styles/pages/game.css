@@ -1,0 +1,164 @@
+main{
+    width: auto;
+    min-height: 100dvh;
+}
+
+main .game-header{
+    display: flex;
+    width: 100%;
+    height: min(100dvh, 650px);
+    gap: 1.5em;
+    position: relative;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 50;
+}
+main .game-header::after{
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, var(--color-bg-dark) 20%, transparent);
+    z-index: -1;
+}
+img{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    z-index: -1;
+}
+.game-details {
+    background: linear-gradient(to top, var(--color-bg), oklch(from var(--color-bg) l c h / 70%));
+    border-radius: 1em 1em 0 0;
+    width: clamp(20px, 60dvw, 700px);
+    height: clamp(20px, 50dvh, 350px);
+    padding: 1em 2em;
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    align-content: center;
+    padding: 0.5em 0;
+    font-family: var(--font-title);
+    font-weight: 600;
+}
+
+.game-details > .tags{
+    display: flex;
+    gap: 0.5em;
+}
+.tag {
+    cursor: default;
+    box-shadow: inset 0 0 0 1px var(--color-primary-700);
+    border-radius: .5em;
+    padding: 0.3em 0.8em;
+    font-size: .75rem;
+    font-weight: 500;
+    width: fit-content;
+    height: fit-content;
+    color: var(--color-text-muted);
+}
+
+.game-details > .platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em 0.8em;
+    font-size: 0.9rem;
+    margin-top: 2em;
+
+    .subtitle {
+        display: inline-block;
+        width: 100%;
+        height: fit-content;
+        font-family: var(--font-title);
+        font-weight: 600;
+    }
+}
+.platforms > .no-platforms{
+  align-self: center;
+}
+.platform {
+    font-weight: 500;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    box-shadow: -2px 0 var(--color-text-muted);
+    padding-inline: .5em;
+    cursor: default;
+}
+
+.development-details {
+    width: 25dvw;
+    height: clamp(20px, 50dvh, 350px);
+    align-self: end;
+    border-radius: 1em 1em 0 0;
+    padding: 1em 2em;
+    background: linear-gradient(to top, var(--color-bg), oklch(from var(--color-bg) l c h / 70%));
+    display: flex;
+    flex-direction: column;
+}
+.development-details > .development {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+}
+.development > .subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-top: 1.5em;
+    cursor: text;
+}
+.launch, .developer {
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: default;
+    font-size: 1rem;
+}
+
+
+main #game-info{
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    z-index: 55;
+}
+.description-details {
+    width: calc(clamp(20px, 60dvw, 700px) + 25dvw + 1.5em);
+    height: fit-content;
+    background: var(--color-bg);
+    color: white;
+    padding: 2em;
+    display: flex;
+    gap: 1.5em;
+    padding-bottom: 4em;
+    flex-direction: column;
+}
+.title {
+    position: relative;
+    font-family: var(--font-title);
+    font-weight: 500;
+    color: var(--color-text);
+}
+.title::after{
+content: '';
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-primary-700), transparent 80%);
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    border-radius: 50%;
+}
+.description{
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="../styles/pages/dashboard.css">
+
+    <!-- <script type="module" src="../scripts/main.js"></script> -->
+    <script type="module" src="../scripts/pages/dashboard.js"></script>
+</head>
+<body>
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <orbi-logo></orbi-logo>
+            <button id="toggle-btn">
+            <orbi-icon name="arrow-back"></orbi-icon>
+            </button>
+        </div>
+
+        <ul class="sidebar-list">
+            <div class="list-title show">
+                <span>Principal</span>
+            </div>
+            <li>
+                <a href="app.test:4000">
+                    <orbi-icon name="home"></orbi-icon>
+                    <span>Volver a Inicio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-table="dashboard" class="active">
+                    <orbi-icon name="dashboard"></orbi-icon>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <div class="list-title show">
+                <span>Tablas</span>
+            </div>
+            <li>
+                <button class="dropdown-btn">
+                    <orbi-icon name="user"></orbi-icon>
+                    <span>Usuarios</span>
+                    <orbi-icon name="drop-down"></orbi-icon>
+                </button>
+                <ul class="sub-menu">
+                    <div>
+                        <li>
+                            <a href="#" data-table="users">
+                                <span>Usuarios</span>
+                            </a>
+                            <a href="#" data-table="tiers">
+                                <span>Planes</span>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </li>
+            <li>
+                <button class="dropdown-btn">
+                    <orbi-icon name="administration"></orbi-icon>
+                    <span>Administrativas</span>
+                    <orbi-icon name="drop-down"></orbi-icon>
+                </button>
+                <ul class="sub-menu">
+                    <div>
+                        <li>
+                            <a href="#" data-table="admins">
+                                <span>Admins</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-table="areas">
+                                <span>Áreas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-table="roles" class="">
+                                <span>Roles</span>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </li>
+            <li>
+                <button class="dropdown-btn">
+                    <orbi-icon name="game-controller"></orbi-icon>
+                    <span>Juegos</span>
+                    <orbi-icon name="drop-down"></orbi-icon>
+                </button>
+                <ul class="sub-menu">
+                    <div>
+                        <li>
+                            <a href="#" data-table="games">
+                                <span>Juegos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-table="platforms">
+                                <span>Plataformas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-table="tags">
+                                <span>Etiquetas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-table="developers">
+                                <span>Desarrolladores</span>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="dashboard-view" class="content-view">
+            <div class="dashboard-header">
+                <h2>
+                    <orbi-icon name="dashboard"></orbi-icon>
+                    <span>Dashboard</span>
+                </h2>
+                <p>Bienvenido al panel de administración.</p>
+            </div>
+        </div>
+
+        <div id="table-view" class="content-view hidden">
+            <div class="table-header">
+                <h2 id="table-title">
+                    <orbi-icon name="tables"></orbi-icon>
+                    <span></span>
+                </h2>
+                <div class="search-controls">
+                    <orbi-icon name="search"></orbi-icon>
+                    <input type="text" id="search-input" placeholder="Buscar...">
+                </div>
+                <button id="reload-btn">
+                    <orbi-icon name="refresh"></orbi-icon>
+                </button>
+                <button id="add-btn">
+                    <orbi-icon name="cross"></orbi-icon>
+                    <span>Nuevo</span>
+                </button>
+            </div>
+            <div class="table-container">
+                <table id="data-table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <dialog>
+            <div class="dialog-header">
+                <h3 id="dialog-title">
+                    <orbi-icon name="add"></orbi-icon>
+                    <span>Crear</span>
+                </h3>
+                <button id="close-dialog-btn">
+                    <orbi-icon name="cross"></orbi-icon>
+                </button>
+            </div>
+
+            <form></form>
+        </dialog>
+    </main>
+</body>
+</html>

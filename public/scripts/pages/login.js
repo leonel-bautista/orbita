@@ -1,10 +1,14 @@
+import '../components/orbi-logo.js'
+import '../components/orbi-icon.js'
+import '../components/orbi-error.js'
+
+import { login } from "../client.js";
+
 const form = document.querySelector('form');
 const email = document.querySelector('#email-input');
 const password = document.querySelector('#pw-input');
 const togglePwBtn = document.querySelector('#toggle-pw-btn');
 const submitBtn = document.querySelector('#submit-btn');
-
-const API = "http://api.app.test:4000";
 
 // MENSAJES DE ERROR
 const ERR_MESSAGES = {
@@ -110,17 +114,12 @@ async function loginAccount(email, password){
         next: new URLSearchParams(window.location.search).get("next") || ""
     }
 
-    const res = await fetch(`${API}/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include",
-        body: JSON.stringify(data)
-    })
-    const body = await res.json();
+    const res = await login(data);
 
-    return { status: res.status, body: body };
+    return {
+        status: res.status,
+        body: res.body
+    }
 }
 
 // EVENTOS

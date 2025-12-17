@@ -1,8 +1,8 @@
+import express from "express";
+
 import { findUserByEmail, getProfile, register, login, logout } from "#controllers/auth.controller";
 import { checkAuth, userOnly } from "#middlewares/authorizations.middleware";
 import { validateCredentials } from "#middlewares/validations.middleware";
-
-import express from "express";
 
 const router = express.Router();
 

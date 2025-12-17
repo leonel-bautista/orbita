@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Órbita ⪼ Lista de Juegos</title>
+
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/pages/games-list.css">
+
+    <script type="module" src="../scripts/main.js"></script>
+    <script type="module" src="../scripts/pages/games-list.js"></script>
+</head>
+<body>
+    <header>
+        <orbi-nav></orbi-nav>
+    </header>
+
+    <orbi-panel></orbi-panel>
+
+    <main>
+        <section id="games-list">
+            <div class="search-controls">
+                <orbi-icon name="search"></orbi-icon>
+                <input type="text" id="search-input" placeholder="Buscar...">
+            </div>
+
+            <ul></ul>
+        </section>
+    </main>
+
+    <footer>
+        <orbi-logo></orbi-logo>
+        <span>Sitio creado por <a href="https://github.com/leonel-bautista/orbita" target="_blank">Leonel Bautista</a></span>
+        <p>&copy; 2025 Órbita. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
