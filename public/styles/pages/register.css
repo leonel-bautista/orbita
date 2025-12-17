@@ -1,25 +1,21 @@
-body > main{
-    min-height: 100vh;
+body > main {
+    min-height: 100dvh;
 
     display: grid;
     place-items: center;
 
-    background: radial-gradient(ellipse at -200vw -500vh, var(--color-blue), transparent)
-                no-repeat center/100% 100%,
-
-                radial-gradient(ellipse at -400vw 50vh, var(--color-cyan), transparent)
-                no-repeat center/100% 100%,
-
-                var(--pattern-stars);
+    background-color: var(--color-bg-dark);
 }
 
-#register-section{
+#register-section {
     width: clamp(min(100vw, 450px), 40vw, 650px);
     height: fit-content;
-    padding: min(8vh, 4rem) min(10vw, 3rem);
+    padding: min(8vh, 4em) min(10vw, 3em);
     position: relative;
+    display: flex;
+    flex-direction: column;
 
-    border: 0.2rem inset rgba(var(--rgb-black), 0.1);
+    /* border: 0.2rem inset rgba(var(--rgb-black), 0.1);
     border-radius: 1rem;
     border-top-right-radius: min(5rem, 20vw);
     backdrop-filter: blur(5px);
@@ -28,20 +24,20 @@ body > main{
         -30deg,
         rgba(var(--rgb-black), 0.4),
         rgba(var(--rgb-black), 0.2));
-    box-shadow: 0 0 2rem rgba(var(--rgb-black), 0.3);
+    box-shadow: 0 0 2rem rgba(var(--rgb-black), 0.3); */
 
     z-index: 1000;
 
-    &:focus-within::before{
+    /* &:focus-within::before{
         width: 96%;
         height: 96%;
         box-shadow: inset 0 0 0 0.1rem var(--color-light-cyan);
     }
     &:has(#submit-btn + orbi-icon.loading)::before{
         box-shadow: inset 0 0 0 0.1rem rgba(var(--rgb-black), 0.2);
-    }
+    } */
 }
-#register-section::before{
+/* #register-section::before{
     content: '';
     width: 97%;
     height: 97%;
@@ -58,94 +54,94 @@ body > main{
     transition: box-shadow 150ms ease,
                 width 150ms ease, height 150ms ease;
     pointer-events: none;
-}
+} */
 #register-section{
-    h2{
-        text-wrap: balance;
+    .home-link {
+        place-self: center;
+        display: flex;
+        orbi-logo { height: 2.2rem; }
+    }
+    h2 {
+        margin-top: min(6vh, 2em);
         font-size: 1.2rem;
         font-weight: bold;
-        margin-top: min(6vh, 2rem);
-
-        color: var(--color-light-gray);
+        font-family: var(--font-title);
+        text-wrap: balance;
     }
-    p{
+    p {
+        margin-top: .2em;
+        font-size: .9rem;
         text-wrap: pretty;
-        font-size: 0.9rem;
-        margin-top: 0.2rem;
+        color: var(--color-text-muted);
 
-        color: var(--color-gray);
-    }
-    a{
-        font-weight: 500;
-        color: var(--color-light-cyan);
-    }
-    a:hover, a:focus-visible{
-        color: var(--color-pale-cyan);
-        text-decoration: none;
+        a {
+            font-weight: 500;
+            color: var(--color-tertiary-900);
+        }
+        a:hover, a:focus-visible { text-decoration: none; }
     }
 }
 
 
 /* formulario de registro */
-form{
-    margin-top: 2.5rem;
-
-    orbi-icon{ pointer-events: none; }
+form {
+    margin-top: 2.5em;
+    orbi-icon { pointer-events: none; }
 }
 
-.input-container{
+.input-container {
     position: relative;
 
-    &:not(:first-of-type){ margin-top: 2rem; }
+    &:not(:first-of-type) { margin-top: 2rem; }
 
-    & *:disabled{
+    & *:disabled {
         cursor: default;
-        opacity: 0.5;
+        opacity: .5;
     }
 }
-.input-container{
-    label, input{
-        font-size: 0.9rem;
+.input-container {
+    label, input {
+        font-size: .9rem;
         display: block;
-        caret-color: var(--color-white);
+        caret-color: var(--color-text);
     }
-    label{
+    label {
         height: fit-content;
-        margin: auto;
-        margin-top: 0.4rem;
         inset: 0;
+        margin: auto;
+        margin-top: .4em;
         position: absolute;
 
-        color: var(--color-gray);
+        color: var(--color-text-muted);
 
         transition: translate 150ms ease,
                     color 150ms ease,
                     font-size 150ms ease;
         pointer-events: none;
     }
-    input{
+    input {
         width: 100%;
         height: 2rem;
-        padding: 0.4rem 0.2rem;
+        padding: .4em .2em;
 
-        font-family: var(--font-legible);
+        font-family: var(--font-input);
         border: none;
-        border-radius: 0.2rem 0.2rem 0 0;
-        border-bottom: 1px solid var(--color-darker-gray);
+        border-radius: .2em .2em 0 0;
+        border-bottom: 1px solid var(--color-text-muted);
 
         background: transparent;
-        color: var(--color-white);
+        color: var(--color-text);
+        outline: none;
 
         transition: border-color 150ms ease;
-        outline: none;
     }
-    orbi-icon{
+    orbi-icon {
         height: 100%;
-        color: var(--color-gray);
+        color: var(--color-text-muted);
     }
 
     /* color del auto completado */
-    input:-webkit-autofill,
+    /* input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus{
         -webkit-box-shadow: 0 0 0 1000px var(--color-dark-cyan) inset !important;
@@ -155,39 +151,39 @@ form{
     input:-moz-autofill {
         box-shadow: inset 0 0 0 1000px var(--color-dark-cyan) !important;
         color: var(--color-white) !important;
-    }
+    } */
 }
-.input-container{
+.input-container {
     &:focus-within,
     &:has(input:not(:placeholder-shown)),
-    &.error{
+    &.error {
         label{
             margin: 0;
-            font-size: 0.75rem;
+            font-size: .75em;
             translate: 0 -100%;
         }
     }
-    &:focus-within{
-        label{ color: var(--color-light-cyan); }
-        input{ border-bottom-color: var(--color-light-cyan); }
+    &:focus-within {
+        label { color: var(--color-tertiary-900); }
+        input { border-bottom-color: var(--color-tertiary-900); }
     }
-    &.error{
-        input{ border-color: var(--color-pale-red); }
-        label{ color: var(--color-pale-red); }
+    &.error {
+        input { border-color: var(--color-error); }
+        label { color: var(--color-error); }
     }
 }
-#pw-input{
-    padding-right: 2rem;
+#pw-input {
+    padding-right: 2em;
 
     &::-ms-reveal,
-    &::-webkit-password-toggle-button{
+    &::-webkit-password-toggle-button {
         display: none;
     }
 }
 
-.btn-container{
-    height: 2rem;
+.btn-container {
     aspect-ratio: 1 / 1;
+    height: 2rem;
     position: absolute;
     inset: 0;
 
@@ -195,89 +191,89 @@ form{
     align-items: center;
     justify-content: center;
     justify-self: end;
-    
+
     background: transparent;
 }
-#toggle-pw-btn{
-    height: 1.2rem;
+#toggle-pw-btn {
     aspect-ratio: 1 / 1;
+    height: 1.2rem;
     border: none;
 
     background: transparent;
-    color: var(--color-dark-gray);
+    color: var(--color-text-muted);
 
-    &:not(:disabled){ cursor: pointer; }
+    &:not(:disabled) { cursor: pointer; }
 }
 
-#submit-btn{
+#submit-btn {
     height: 3rem;
     width: 100%;
-    padding: 0.5rem;
-    margin-top: 3rem;
+    padding: .5em;
+    margin-top: 3em;
     border: none;
-    border-radius: 0.25rem;
+    border-radius: .5em;
 
     position: relative;
-    display: inline-flex;
-    gap: 0.2rem;
+    display: flex;
+    gap: .2em;
     justify-content: center;
     align-items: center;
-
-    background: radial-gradient(
-        circle at top right,
-        var(--color-darker-blue),
-        var(--color-darker-gray),
-        var(--color-light-cyan),
-        var(--color-pale-cyan));
-    background-size: 350% 350%;
-    background-position: 40%;
-    color: var(--color-white);
-    
-    transition: background-position 300ms ease-in-out;
     cursor: pointer;
 
-    &:disabled{
-        background-position: 100%;
-        cursor: not-allowed;
-        &:has(orbi-icon.loading){ cursor: wait; }
+    background: radial-gradient(
+                    ellipse at bottom right,
+                    var(--color-tertiary-700) 35%, 35.1%,
+                    transparent
+                ),
+                radial-gradient(
+                    ellipse at top left,
+                    var(--color-tertiary-900) 40%, 40.1%,
+                    var(--color-tertiary-800)
+                );
+    color: var(--color-text-alt);
 
-        & > *:not(.loading){
-            color: var(--color-dark-gray);
-            opacity: 0.5;
+    &:disabled {
+        cursor: not-allowed;
+        background: transparent;
+        box-shadow: inset 0 0 0 1px var(--color-text-muted);
+
+        &:has(orbi-icon.loading) { cursor: wait; }
+
+        & > *:not(.loading) {
+            color: var(--color-text-muted);
         }
     }
-    
 }
-#submit-btn{
-    orbi-icon{
-        height: 0.9rem;
-        stroke-width: 2rem;
+#submit-btn {
+    orbi-icon {
+        height: .9rem;
     }
-    span{
-        height: 1.1rem;
-        font-size: 0.9rem;
-        font-weight: bold;
+    span {
+        font-family: var(--font-title);
+        font-size: 1rem;
+        font-weight: 500;
     }
-    & + orbi-error{
-        margin-top: min(6vh, 2rem);
-        font-size: 0.75rem;
+    & + orbi-error {
+        margin-top: min(6vh, 2em);
+        font-size: .75rem;
     }
-    &:not(button:disabled){
+    /* &:not(button:disabled){
         orbi-icon, span{
             filter: drop-shadow(1px 1px 1px var(--color-dark-gray));
         }
         &:hover, &:focus-visible{
             background-position: 0%;
         }
-    }
+    } */
 }
 
-@keyframes spin{
+@keyframes spin {
     to { rotate: 360deg; }
 }
 orbi-icon.loading {
     position: absolute;
-    animation: spin 0.8s linear infinite;
+
+    animation: spin 800ms linear infinite;
     transform-origin: center center;
 }
 
@@ -285,12 +281,12 @@ orbi-icon.loading {
     height: 1.2rem;
     inset: 0;
     margin: auto;
-    margin-right: 0.4rem;
+    margin-right: .4em;
 }
 
 #submit-btn > orbi-icon.loading {
     inset: 0;
     margin: auto;
-    filter: drop-shadow(0 0 3px var(--color-lighter-cyan))
-            drop-shadow(0 0 3px var(--color-black));
+    /* filter: drop-shadow(0 0 3px var(--color-lighter-cyan))
+            drop-shadow(0 0 3px var(--color-black)); */
 }

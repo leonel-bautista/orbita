@@ -1,26 +1,24 @@
-const errorElem = `
-    <span class="error-message"></span>
-`;
 const errorStyle = `
     :host{
         width: 100%;
 
         display: block;
-        font-size: 0.7rem;
-        font-weight: 400;
+        font-size: .7rem;
+        font-weight: 500;
 
         box-sizing: border-box;
         z-index: 100;
     }
     :host([no-bg]) .error-message{
         background-color: transparent;
-        color: var(--color-pale-red);
+        color: var(--color-error);
     }
     .error-message{
-        padding: 0.3rem 0.2rem;
-        border-radius: 0 0 5px 5px;
+        padding: .3em .2em;
+        border-radius: 0 0 .2em .2em;
+        cursor: default;
 
-        font-family: var(--font-legible);
+        font-family: var(--font-text);
         font-size: inherit;
         font-weight: inherit;
         text-wrap: balance;
@@ -28,14 +26,14 @@ const errorStyle = `
 
         display: block;
 
-        background-color: var(--color-pale-red);
-        color: var(--color-red);
+        background-color: var(--color-error);
+        color: var(--color-text-alt);
     }
 `;
 const template = document.createElement('template');
 template.innerHTML = `
     <style>${errorStyle}</style>
-    ${errorElem}
+    <span class="error-message"></span>
 `;
 
 class OrbitaErrorMessage extends HTMLElement{

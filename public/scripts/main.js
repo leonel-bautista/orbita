@@ -9,8 +9,11 @@ import { getProfile } from './client.js';
 (async function loadSession() {
     let user = null;
 
-    try{ user = await getProfile(); }
-    catch (err){}
+    try {
+        const res = await getProfile();
+        user = res.ok ? res.body : null
+    }
+    catch (error) {}
 
     document.dispatchEvent(new CustomEvent('user-loaded', { detail: user }));
 })();

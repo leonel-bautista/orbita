@@ -28,3 +28,24 @@ export function findUserByEmail(email) {
         body: JSON.stringify({ email })
     });
 }
+
+export function getTableData(table, options = {}) {
+    const params = new URLSearchParams();
+
+    Object.entries(options).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+            params.append(key, value);
+        }
+    });
+    const query = params.toString() ? `?${params.toString()}` : '';
+
+    return request(`/tables/${table}${query}`);
+}
+
+export function getActiveGames() {
+    return getTableData('games', { status: 'active' });
+}
+
+export function searchActiveGames(name = '') {
+    return getTableData('games', { status: 'active', name });
+}

@@ -1,0 +1,84 @@
+section#games-list {
+    min-height: 100dvh;
+    padding: 5dvw;
+    padding-top: calc(5dvw + 70px);
+}
+
+#games-list ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
+    gap: 1em;
+    justify-content: space-evenly;
+    container-type: inline-size;
+
+    .listed-game {
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        border-radius: 1em;
+    }
+    a {
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+
+        img {
+            object-fit: contain;
+            object-position: center;
+            height: 100%;
+            width: auto;
+        }
+        .name {
+            color: var(--color-text);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            margin: .8em 1em;
+            font-weight: 700;
+            font-size: .9rem;
+            display: none;
+        }
+
+        &:hover::after, &:hover .name {
+            display: block;
+        }
+    }
+    a::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, var(--color-bg), transparent);
+        display: none;
+        pointer-events: none;
+    }
+}
+
+.search-controls {
+    position: sticky;
+    top: 70px;
+    width: 100%;
+    margin-bottom: 3em;
+    z-index: 300;
+
+    orbi-icon {
+        position: absolute;
+        left: 0;
+        color: var(--color-text-muted);
+        align-self: center;
+        margin-left: .4em;
+    }
+    #search-input {
+        width: 100%;
+        height: 100%;
+        padding: .5em 2.8em;
+        border: none;
+        background: var(--color-bg-dark);
+        border-bottom: 1px solid var(--color-tertiary-900);
+        color: var(--color-text);
+    }
+}

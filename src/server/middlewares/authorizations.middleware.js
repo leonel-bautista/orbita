@@ -35,6 +35,8 @@ export const checkAuth = (req, res, next) => {
 }
 
 export const userOnly = (req, res, next) => {
+    // if (req.method === 'OPTIONS') return res.sendStatus(204);
+
     if (!req.user){
         if (req.accepts('html')){
             const nextUrl = buildNextAbsolute(req);
@@ -50,6 +52,8 @@ export const userOnly = (req, res, next) => {
 }
 
 export const adminOnly = (req, res, next) => {
+    // if (req.method === 'OPTIONS') return res.sendStatus(204);
+
     if (!req.user){
         if (req.accepts('html')){
             const nextUrl = buildNextAbsolute(req);

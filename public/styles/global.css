@@ -1,71 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
 
-:root{
-    /* fuente por defecto */
-    --font-default: 'Rajdhani', 'Inter', 'Lucida Grande', 'Lucida Sans', Arial, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    --font-legible: 'Inter', sans-serif;
+:root {
+    --font-text: 'Nunito', sans-serif;
+    --font-input: 'Nunito', sans-serif;
+    --font-title: 'Fredoka', sans-serif;
 
-    /* colores basicos */
-    --color-white: #ffffff;
-    --rgb-white: 255, 255, 255;
-    --color-black: #000000;
-    --rgb-black: 0, 0, 0;
-    /* azules */
-    --color-pale-blue: #508991;
-    --color-lighter-blue: #6BBEFF;
-    --color-light-blue: #1bb2cc;
-    --color-blue: #2374c6;
-    --color-dark-blue: #172a3a;
-    --color-darker-blue: #1b1c1d;
-    /* cianes */
-    --color-pale-cyan: #75dddd;
-    --color-light-cyan: #0ddfd1;
-    --color-cyan: #147c8e;
-    --color-dark-cyan: #004346;
-    --color-darker-cyan: #1a2224;
-    /* grises */
-    --color-light-gray: #f3f9ff;
-    --color-gray: #a3abbd;
-    --color-dark-gray: #5a6477;
-    --color-darker-gray: #3f4756;
-    /* rojos */
-    --color-pale-red: #ffb7b7;
-    --color-lighter-red: #fd4141;
-    --color-red: #ff0000;
+    --color-error: oklch(0.8465 0.084 18.96);
 
-    /* patrones de fondo */
-    --pattern-stars:
-        radial-gradient(circle, var(--color-dark-gray) 1px, transparent 1px)
-            repeat 20px 30px/97px 103px,
-        radial-gradient(circle, var(--color-darker-blue) 1.5px, transparent 1.5px)
-            repeat 100px 150px/151px 148px,
-        radial-gradient(circle, var(--color-darker-blue) 2px, transparent 2px)
-            repeat 300px 250px/198px 202px;
+    --color-primary-900: oklch(.65 .15 22);
+    --color-primary-800: oklch(from var(--color-primary-900) calc(l * .85) c h);
+    --color-primary-700: oklch(from var(--color-primary-900) calc(l * .7) c h);
+
+    --color-secondary-900: oklch(0.235 0.065 290);
+    --color-secondary-800: oklch(from var(--color-secondary-900) calc(l * .8) c h);
+    --color-secondary-700: oklch(from var(--color-secondary-900) calc(l * .6) c h);
+
+    --color-tertiary-900: oklch(.9 .12 90);
+    --color-tertiary-800: oklch(from var(--color-tertiary-900) calc(l * .85) c calc(h * .9));
+    --color-tertiary-700: oklch(from var(--color-tertiary-900) calc(l * .7) c calc(h * .8));
+
+    --color-border: oklch(from var(--color-primary-900) calc(l * .65) c calc(h * .85));
+    --color-text: oklch(.9 .015 300);
+    --color-text-alt: oklch(.15 .015 300);
+    --color-text-muted: oklch(from var(--color-text) calc(l * .75) c h);
+
+    --color-bg: oklch(0.1 0.065 290);
+    --color-bg-light: oklch(from var(--color-bg) calc(l * 1.15) c h);
+    --color-bg-dark: oklch(from var(--color-bg) calc(l * .75) c h);
 }
 
-*, *::before, *::after{
+*, *::before, *::after {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: var(--font-default);
 }
 
-body{
-    width: 100vw;
+body {
+    width: 100dvw;
+    min-height: 100dvh;
+    color: var(--color-text) !important;
+    background-color: var(--color-bg-dark);
+    font-family: var(--font-text) !important;
+
     overflow-x: hidden;
-}
 
-@media (prefers-color-scheme: dark){
-    body{
-        color: var(--color-white);
-        background-color: var(--color-black);
+    &, * {
+        &::-webkit-scrollbar {
+            width: 1em;
+            z-index: -1;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background-color: var(--color-primary-700);
+            border: .35em solid transparent;
+            background-clip: content-box;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: var(--color-primary-900);
+        }
     }
 }
-@media (prefers-color-scheme: light){
-    body{
-        color: var(--color-black);
-        background-color: var(--color-white);
+body > header {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+}
+body > main {
+    min-height: 100dvh;
+}
+body > footer {
+    min-height: 450px;
+    gap: 2em;
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    place-content: center;
+    place-items: center;
+    background-color: var(--color-bg-dark);
+
+    orbi-logo { opacity: .3; }
+    span a {
+        color: var(--color-tertiary-900);
+        &:hover, &:focus-visible {
+            text-decoration: none;
+        }
     }
+    p { color: var(--color-text-muted); }
 }

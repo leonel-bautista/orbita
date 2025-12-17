@@ -65,8 +65,8 @@ function safeRedirect(nextURL, currentOrigin) {
 export const findUserByEmail = (req, res) => {
     if (!db) {
         return res
-                .status(500)
-                .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+            .status(500)
+            .json({ error: "Hubo un problema comunicandose con la base de datos." });
     }
 
     const { email } = req.body;
@@ -77,52 +77,52 @@ export const findUserByEmail = (req, res) => {
         if (error){
             return res
                 .status(500)
-                .json({ error: "(❌) ERROR: Vuelva a intentarlo más tarde" });
+                .json({ error: "Hubo un problema verificando el usuario. Vuelva a intentarlo más tarde" });
         }
         const found = result[0].users_found > 0;
-        return res
-            .json({ exists: found });
+
+        return res.json({ exists: found });
     })
 }
 export const getProfile = (req, res) => {
     if (!db) {
         return res
             .status(500)
-            .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+            .json({ error: "Hubo un problema comunicandose con la base de datos." });
     }
     if (!req.user){
         return res
             .status(401)
-            .json({ error: "(❌) ERROR: No autenticado." });
+            .json({ error: "Sin autenticación." });
     }
 
     const { id } = req.user;
     const sql = `
-        SELECT user_id, user_name, user_alias, user_image, tier_name, email
+        SELECT users.user_id AS id, users.user_name AS username, users.user_image AS image, tiers.tier_name AS tier, users.email AS email,
+        CASE WHEN admins.admin_id IS NOT NULL THEN 1 ELSE 0 END AS isAdmin
         FROM users JOIN tiers ON users.tier_id = tiers.tier_id
-        WHERE user_id = ? LIMIT 1
+        LEFT JOIN admins ON users.user_id = admins.user_id
+        WHERE users.user_id = ? LIMIT 1
     `;
     db.query(sql, [id], (error, result) => {
         if (error){
             return res
                 .status(500)
-                .json({ error: "(❌) ERROR: Vuelva a intentarlo más tarde" });
+                .json({ error: "Hubo un problema trayendo los datos de usuario. Vuelva a intentarlo más tarde" });
         }
         if (result.length === 0){
             return res
                 .status(404)
-                .json({ error: "(❌) ERROR: Usuario no encontrado." });
+                .json({ error: "No se han encontrado datos de usuario." });
         }
-        const u = result[0];
 
-        return res.json({
-            id: u.user_id,
-            name: u.user_name,
-            alias: u.user_alias,
-            image: u.user_image,
-            tier: u.tier_name,
-            email: u.email
-        });
+        const user = result[0];
+        const mappedResult = {
+            ...user,
+            image: `/uploads/users/${user.image || 'u-default.png'}`
+        }
+
+        res.json(mappedResult);
     })
 };
 
@@ -131,53 +131,48 @@ export const register = (req, res) => {
     if (!db) {
         return res
                 .status(500)
-                .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+                .json({ error: "Hubo un problema comunicandose con la base de datos." });
     }
 
     const { email, password } = req.body;
     const checkUser = `
-        SELECT COUNT(*) as found FROM users WHERE email = ? LIMIT 1
+        SELECT COUNT(*) AS found FROM users WHERE email = ? LIMIT 1
     `;
     db.query(checkUser, [email], async (error, result) => {
         if (error){
             return res
                 .status(500)
-                .json({ error: "(❌) ERROR: Vuelva a intentarlo más tarde" });
+                .json({ error: "Hubo un problema verificando el usuario. Vuelva a intentarlo más tarde" });
         }
         if (result[0].found > 0){
             return res
                 .status(409)
-                .json({ user_exists: "(❌) ERROR: El correo electrónico ya está en uso" });
+                .json({ user_exists: "El correo electrónico ya está en uso." });
         }
 
-        const image = ""; // por defecto, el usuario no tendrá imágen (se le dará una predeterminada luego)
-        const tier = 1; // nuevas cuentas inician con el tier base
-        const name = `user${rngString(6)}`; // nuevas cuentas inician con un nombre aleatorio
-        const alias = name; // el alias predeterminado será el nombre de usuario
+        const image = "u-default.png";
+        const tier = 1;
+        const username = `user${rngString(6)}`;
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const sql = `
-            INSERT INTO users (user_image, tier_id, user_name, user_alias, email, password)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO users (user_image, tier_id, user_name, email, password)
+            VALUES (?, ?, ?, ?, ?)
         `;
-        const params = [image, tier, name, alias, email, hashedPassword];
+        const params = [image, tier, username, email, hashedPassword];
 
         db.query(sql, params, (error, result) => {
             if (error){
                 return res
                     .status(500)
-                    .json({ error: "(❌) ERROR: Vuelva a intentarlo más tarde" });
+                    .json({ error: "Hubo un problema al registrarse. Vuelva a intentarlo más tarde." });
             }
-            const newUserID = result.insertId;
+            const newUserId = result.insertId;
             const auth = "user";
             const cookieExpiration = new Date(Date.now() + parseInt(COOKIE_EXPIRATION) * 24 * 60 * 60 * 1000);
 
             const token = jwt.sign(
-                {
-                    id: newUserID,
-                    username: name,
-                    auth: auth
-                },
+                { id: newUserId, username, auth },
                 JWT_SECRET,
                 { expiresIn: TOKEN_EXPIRATION }
             );
@@ -198,8 +193,8 @@ export const register = (req, res) => {
             return res
                 .status(201)
                 .json({
-                    message: "(✔) Registro con éxito!",
-                    token: token,
+                    message: "Registro con éxito.",
+                    token,
                     redirect: redirectPath
                 });
         })
@@ -208,53 +203,54 @@ export const register = (req, res) => {
 export const login = (req, res) => {
     if (!db) {
         return res
-                .status(500)
-                .json({ error: "(❌) ERROR: Hubo problemas con la base de datos." });
+            .status(500)
+            .json({ error: "Hubo un problema comunicandose con la base de datos." });
     }
 
     const { email, password } = req.body;
     const findUser = `
-        SELECT user_id, user_name, password FROM users WHERE email = ?
+        SELECT user_id AS id, user_name AS username, password AS password
+        FROM users WHERE email = ?
     `;
     db.query(findUser, [email], async (error, result) => {
         if (error){
             return res
                 .status(500)
-                .json({ error: "(❌) ERROR: Vuelva a intentarlo más tarde" });
+                .json({ error: "Hubo un problema verificando el usuario. Vuelva a intentarlo más tarde." });
         }
         if (result.length === 0){
             return res
                 .status(401)
-                .json({ not_found: "(❌) ERROR: Verifique que el correo y/o contraseña sean correctos." });
+                .json({ not_found: "Verifique que el correo y/o contraseña sean correctos." });
         }
-        const u = result[0];
+        const user = result[0];
 
-        const correctPassword = await bcrypt.compare(password, u.password);
+        const correctPassword = await bcrypt.compare(password, user.password);
         if (!correctPassword){
             return res
                 .status(401)
-                .json({ not_found: "(❌) ERROR: Verifique que el correo y/o contraseña sean correctos." });
+                .json({ not_found: "Verifique que el correo y/o contraseña sean correctos." });
         }
         const checkAdmin = `
-            SELECT role_name FROM admins
+            SELECT role_name AS role FROM admins
             JOIN users ON admins.user_id = users.user_id
             JOIN roles ON admins.role_id = roles.role_id
-            WHERE users.user_id = ?
+            WHERE admins.user_id = ?
         `;
-        db.query(checkAdmin, [u.user_id], (error, result) => {
+        db.query(checkAdmin, [user.id], (error, result) => {
             if (error){
                 return res
                     .status(500)
-                    .json({ error: "(❌) ERROR: Vuelva a intentarlo más tarde" });
+                    .json({ error: "Hubo un problema verificando el administrador. Vuelva a intentarlo más tarde." });
             }
-            const auth = result.length ? "admin"
-                                       : "user";
+            const admin = result[0];
+            const auth = result.length ? "admin" : "user";
             const tokenData = {
-                id: u.user_id,
-                username: u.user_name,
-                auth: auth
+                id: user.id,
+                username: user.username,
+                auth
             };
-            if (auth === "admin") tokenData.role = result[0].role_name;
+            if (auth === "admin") tokenData.role = admin.role;
 
             const cookieExpiration = new Date(Date.now() + parseInt(COOKIE_EXPIRATION) * 24 * 60 * 60 * 1000);
 
@@ -280,8 +276,8 @@ export const login = (req, res) => {
             return res
                 .status(201)
                 .json({
-                    message: "(✔) Inicio de sesión con éxito!",
-                    token: token,
+                    message: "Inicio de sesión con éxito.",
+                    token,
                     redirect: redirectPath
                 });
         })
@@ -296,5 +292,5 @@ export const logout = (req, res) => {
         path: "/"
     });
 
-    return res.json({ message: "(✔) Se ha cerrado la sesión con éxito!" });
+    res.json({ message: "Sesión cerrada con éxito." });
 }
