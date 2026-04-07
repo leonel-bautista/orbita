@@ -1,7 +1,7 @@
 import { db } from "#config/db";
 import bcrypt from "bcryptjs";
 
-const { SALT_ROUNDS } = process.env;
+const { SALT_ROUNDS, DEFAULT_PIN } = process.env;
 const salt = parseInt(SALT_ROUNDS) || 10;
 
 export const getEveryAdmin = (req, res) => {
@@ -15,7 +15,7 @@ export const getEveryAdmin = (req, res) => {
     const params = [];
     let sql = `
         SELECT admins.admin_id AS id,
-               users.user_name AS name,
+               users.user_name AS user,
                roles.role_name AS role,
                areas.area_name AS area
         FROM admins
@@ -37,6 +37,11 @@ export const getEveryAdmin = (req, res) => {
                 .status(500)
                 .json({ error: "Hubo un problema trayendo los administradores. Vuelva a intentarlo más tarde" });
         }
+        if (result.length == 0) {
+            return res
+                .status(404)
+                .json({ error: "No se encontraron resultados." })
+        }
 
         res.json(result);
     })
@@ -50,7 +55,7 @@ export const createAdmin = (req, res) => {
     }
 
     const { user, role, area } = req.body;
-    const pin = req.body.pin || process.env.DEFAULT_PIN || '4321';
+    const pin = req.body.pin || DEFAULT_PIN || '4321';
     const checkAdmin = 'SELECT admin_id AS found FROM admins WHERE user_id = ? LIMIT 1'
 
     db.query(checkAdmin, [user], async (error, result) => {

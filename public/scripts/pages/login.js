@@ -77,7 +77,7 @@ function handleFieldError(e){
     const name = target.name;
     const value = target.value;
     const errorMsg = validators[name](value);
-    
+
     if (!errorMsg) clearError(container);
 
     updateSubmitState();
@@ -149,7 +149,7 @@ form.addEventListener('submit', async (e) => {
         updateSubmitState();
         return showError(form, ERR_MESSAGES.EMPTY_FIELDS);
     }
-    
+
     if (emailErr || passwordErr){
         updateSubmitState();
         if (emailErr) showError(email.closest('.input-container'), emailErr);

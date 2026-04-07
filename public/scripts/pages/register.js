@@ -2,7 +2,7 @@ import '../components/orbi-logo.js'
 import '../components/orbi-icon.js'
 import '../components/orbi-error.js'
 
-import { register, findUserByEmail } from "../client.js";
+import { register, findUserBy } from "../client.js";
 
 const form = document.querySelector('form');
 const email = document.querySelector('#email-input');
@@ -53,18 +53,17 @@ function emailExistanceChecker() {
     let lastChecked = false;
     let controller = null;
 
-    return async function checkEmail(container, value) {
+    return async function(container, value) {
         if (value === lastValue) return lastChecked;
-        lastValue = value;
 
+        lastValue = value;
         controller?.abort();
         controller = new AbortController();
 
         toggleSpinner(container, true, [email, submitBtn]);
 
         try {
-            const res = await findUserByEmail(value)
-
+            const res = await findUserBy('email', value);
             res.ok ? lastChecked = res.body.exists
                    : lastChecked = false
         }

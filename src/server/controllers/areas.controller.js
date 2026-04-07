@@ -9,7 +9,7 @@ export const getEveryArea = (req, res) => {
 
     const { name } = req.query;
     const params = [];
-    let sql = 'SELECT area_id AS id, area_name AS name FROM areas WHERE 1=1'
+    let sql = 'SELECT area_id AS id, area_name AS name, area_description AS description FROM areas WHERE 1=1'
 
     if (name) {
         sql += " AND area_name LIKE ?";
@@ -23,6 +23,11 @@ export const getEveryArea = (req, res) => {
                 .status(500)
                 .json({ error: "Hubo un problema trayendo las áreas. Vuelva a intentarlo más tarde" });
         }
+        if (result.length == 0) {
+            return res
+                .status(404)
+                .json({ error: "No se encontraron resultados." })
+        }
 
         res.json(result);
     })
@@ -35,10 +40,10 @@ export const createArea = (req, res) => {
             .json({ error: "Hubo un problema comunicandose con la base de datos." });
     }
 
-    const { name } = req.body;
-    const sql = 'INSERT INTO areas (area_name) VALUES (?)';
+    const { name, description = '' } = req.body;
+    const sql = 'INSERT INTO areas (area_name, area_description) VALUES (?, ?)';
 
-    db.query(sql, [name], (error, result) => {
+    db.query(sql, [name, description], (error, result) => {
         if (error) {
             return res
                 .status(500)
@@ -57,7 +62,7 @@ export const updateArea = (req, res) => {
     }
 
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, description } = req.body;
 
     const fields = [];
     const params = [];
@@ -65,6 +70,10 @@ export const updateArea = (req, res) => {
     if (name) {
         fields.push("area_name = ?");
         params.push(name);
+    }
+    if (description) {
+        fields.push("area_description = ?");
+        params.push(description);
     }
 
     if (fields.length === 0) {
@@ -99,7 +108,7 @@ export const deleteArea = (req, res) => {
     }
 
     const { id } = req.params;
-    const sql = 'DELETE FROM areas WHERE areas_id = ?';
+    const sql = 'DELETE FROM areas WHERE area_id = ?';
     db.query(sql, [id], (error, result) => {
         if (error) {
             return res

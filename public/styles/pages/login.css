@@ -5,51 +5,19 @@ body > main {
     place-items: center;
 
     background-color: var(--color-bg-dark);
-    /* background-image: linear-gradient(oklch(from black l c h / 30%)), url('/assets/images/signin-bg.jpeg');
-    background-size: cover;
-    background-position: center; */
 }
 
 #login-section {
     width: clamp(min(100vw, 450px), 40vw, 650px);
     height: fit-content;
     padding: min(8vh, 4em) min(10vw, 3em);
+
     position: relative;
     display: flex;
     flex-direction: column;
 
-    /* border-radius: 1em;
-    backdrop-filter: blur(5px);
-    background: oklch(from var(--color-bg-light) l c h / 30%); */
-
     z-index: 1000;
 
-    /* &:focus-within::before {
-        width: 96%;
-        height: 96%;
-        box-shadow: inset 0 0 0 .1em var(--color-tertiary-900);
-    }
-    &:has(#submit-btn + orbi-icon.loading)::before{
-        box-shadow: inset 0 0 0 .1em oklch(from var(--color-text) l c h / 20%)
-    } */
-}
-/* #login-section::before{
-    content: '';
-    width: 97%;
-    height: 97%;
-    inset: 0;
-    margin: auto;
-
-    border-radius: 1em;
-    background: transparent;
-    box-shadow: inset 0 0 0 0.1rem oklch(from black l c h / 10%);
-
-    position: absolute;
-    transition: box-shadow 150ms ease,
-                width 150ms ease, height 150ms ease;
-    pointer-events: none;
-} */
-#login-section {
     .home-link {
         place-self: center;
         display: flex;
@@ -87,10 +55,26 @@ form {
     position: relative;
 
     &:not(:first-of-type) { margin-top: 2rem; }
-
     & *:disabled {
         cursor: default;
         opacity: .5;
+    }
+    &:focus-within,
+    &:has(input:not(:placeholder-shown)),
+    &.error {
+        label {
+            margin: 0;
+            font-size: .75em;
+            translate: 0 -100%;
+        }
+    }
+    &:focus-within {
+        label { color: var(--color-tertiary-900); }
+        input { border-bottom-color: var(--color-tertiary-900); }
+    }
+    &.error {
+        input { border-color: var(--color-error); }
+        label { color: var(--color-error); }
     }
 }
 .input-container {
@@ -120,7 +104,6 @@ form {
 
         font-family: var(--font-input);
         border: none;
-        border-radius: .2em .2em 0 0;
         border-bottom: 1px solid var(--color-text-muted);
 
         background: transparent;
@@ -146,25 +129,6 @@ form {
         box-shadow: inset 0 0 0 1000px var(--color-dark-cyan) !important;
         color: var(--color-white) !important;
     } */
-}
-.input-container {
-    &:focus-within,
-    &:has(input:not(:placeholder-shown)),
-    &.error {
-        label{
-            margin: 0;
-            font-size: .75em;
-            translate: 0 -100%;
-        }
-    }
-    &:focus-within {
-        label { color: var(--color-tertiary-900); }
-        input { border-bottom-color: var(--color-tertiary-900); }
-    }
-    &.error {
-        input { border-color: var(--color-error); }
-        label { color: var(--color-error); }
-    }
 }
 #pw-input {
     padding-right: 2em;
@@ -251,14 +215,6 @@ form {
         margin-top: min(6vh, 2em);
         font-size: .75rem;
     }
-    /* &:not(button:disabled) {
-        orbi-icon, span{
-            filter: drop-shadow(1px 1px 1px var(--color-dark-gray));
-        }
-        &:hover, &:focus-visible{
-            background-position: 100%;
-        }
-    } */
 }
 
 @keyframes spin {

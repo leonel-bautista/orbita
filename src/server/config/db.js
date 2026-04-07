@@ -12,7 +12,7 @@ const {
 
 let db;
 
-if (DB_START === 'true'){
+if (DB_START === 'true') {
     db = mysql.createConnection({
         host: DB_HOST,
         user: DB_USER,
@@ -24,7 +24,7 @@ if (DB_START === 'true'){
 
     db.connect(error => {
         if (error){
-            console.error("|❌| ERROR AL CONECTARSE A LA BASE DE DATOS")
+            console.error("❌ Hubo un problema al conectar a la base de datos.");
             console.error(error);
             process.exit(1);
         }
@@ -32,7 +32,7 @@ if (DB_START === 'true'){
         console.log("✅ Conectado a la base de datos!");
     })
 }
-else{
+else {
     db = null;
     console.warn("⚠️ Base de datos no iniciada.");
 }

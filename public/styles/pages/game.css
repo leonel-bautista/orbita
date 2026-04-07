@@ -1,9 +1,4 @@
-main{
-    width: auto;
-    min-height: 100dvh;
-}
-
-main .game-header{
+main .game-header {
     display: flex;
     width: 100%;
     height: min(100dvh, 650px);
@@ -13,7 +8,7 @@ main .game-header{
     overflow: hidden;
     z-index: 50;
 }
-main .game-header::after{
+main .game-header::after {
     content: '';
     pointer-events: none;
     position: absolute;
@@ -22,7 +17,7 @@ main .game-header::after{
     background: linear-gradient(to top, var(--color-bg-dark) 20%, transparent);
     z-index: -1;
 }
-img{
+img {
     display: block;
     position: absolute;
     width: 100%;
@@ -48,7 +43,7 @@ img{
     font-weight: 600;
 }
 
-.game-details > .tags{
+.game-details > .tags {
     display: flex;
     gap: 0.5em;
 }
@@ -79,7 +74,7 @@ img{
         font-weight: 600;
     }
 }
-.platforms > .no-platforms{
+.platforms > .no-platforms {
   align-self: center;
 }
 .platform {
@@ -120,7 +115,7 @@ img{
 }
 
 
-main #game-info{
+main #game-info {
     width: 100%;
     height: fit-content;
 
@@ -147,7 +142,7 @@ main #game-info{
     font-weight: 500;
     color: var(--color-text);
 }
-.title::after{
+.title::after {
 content: '';
     width: 100%;
     height: 2px;
@@ -157,7 +152,7 @@ content: '';
     bottom: -5px;
     border-radius: 50%;
 }
-.description{
+.description {
     font-size: 1rem;
     line-height: 1.5;
     color: var(--color-text-muted);

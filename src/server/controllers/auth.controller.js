@@ -11,18 +11,16 @@ const {
     COOKIE_DOMAIN,
     COOKIE_NAME,
     NODE_ENV,
-    FRONT_URL,
-    ADMIN_URL
+    MAIN_URL
 } = process.env;
 
 const salt = parseInt(SALT_ROUNDS) || 10;
 
-const FRONT_ORIGIN = new URL(FRONT_URL).origin;
-const ADMIN_ORIGIN = new URL(ADMIN_URL).origin;
+const URL_ORIGIN = new URL(MAIN_URL).origin;
 
 function rngString(length){
     let str = "";
-    for (let i = 0; i < length; i++){
+    for (let i = 0; i < length; i++) {
         str += Math.floor(Math.random() * 10)
     }
     return str;
@@ -33,57 +31,23 @@ function safeRedirect(nextURL, currentOrigin) {
     if (typeof nextURL !== "string") return fallback;
 
     let decodedNext;
-    try{ decodedNext = decodeURIComponent(nextURL); }
-    catch{ decodedNext = nextURL; }
+    try { decodedNext = decodeURIComponent(nextURL); }
+    catch { decodedNext = nextURL; }
 
-    try{
+    try {
         const url = new URL(decodedNext);
-
-        if (url.origin === FRONT_ORIGIN || url.origin === ADMIN_ORIGIN){
-            if (url.origin === currentOrigin){
-                const out = url.pathname + url.search;
-                return out;
-            }
+        if (url.origin === URL_ORIGIN) {
+            if (url.origin === currentOrigin) return url.pathname + url.search;
 
             return url.href;
         }
-    } catch{}
+    } catch {}
 
-    if (decodedNext.startsWith("/")){
-        if (currentOrigin === ADMIN_ORIGIN){
-            const out = ADMIN_ORIGIN + decodedNext;
-            return out;
-        }
-
-        return decodedNext;
-    }
+    if (decodedNext.startsWith("/")) return decodedNext;
 
     return fallback;
 }
 
-// --- MÉTODO GET ---
-export const findUserByEmail = (req, res) => {
-    if (!db) {
-        return res
-            .status(500)
-            .json({ error: "Hubo un problema comunicandose con la base de datos." });
-    }
-
-    const { email } = req.body;
-    const sql = `
-        SELECT COUNT(*) as users_found FROM users WHERE email = ?
-    `;
-    db.query(sql, [email], (error, result) => {
-        if (error){
-            return res
-                .status(500)
-                .json({ error: "Hubo un problema verificando el usuario. Vuelva a intentarlo más tarde" });
-        }
-        const found = result[0].users_found > 0;
-
-        return res.json({ exists: found });
-    })
-}
 export const getProfile = (req, res) => {
     if (!db) {
         return res
@@ -126,7 +90,6 @@ export const getProfile = (req, res) => {
     })
 };
 
-// --- MÉTODO POST ---
 export const register = (req, res) => {
     if (!db) {
         return res
@@ -293,4 +256,88 @@ export const logout = (req, res) => {
     });
 
     res.json({ message: "Sesión cerrada con éxito." });
+}
+export const findUser = (req, res) => {
+    if (!db) {
+        return res
+            .status(500)
+            .json({ error: "Hubo un problema comunicandose con la base de datos." });
+    }
+
+    const { check } = req.query;
+    const { email, username } = req.body;
+    let sql = 'SELECT COUNT(*) AS found FROM users WHERE 1=1';
+    const params = [];
+
+    if (check == 'email' && email) {
+        sql += ' AND email = ?';
+        params.push(email);
+    }
+    if (check == 'username' && username) {
+        sql += ' AND user_name = ?';
+        params.push(username);
+    }
+
+    db.query(sql, params, (error, result) => {
+        if (error) {
+            return res
+                .status(500)
+                .json({ error: "Hubo un problema verificando el usuario. Vuelva a intentarlo más tarde" });
+        }
+        const found = result[0].found > 0;
+
+        return res.json({ exists: found });
+    })
+}
+
+export const updateAccount = async (req, res) => {
+    if (!db) {
+        return res
+                .status(500)
+                .json({ error: "Hubo un problema comunicandose con la base de datos." });
+    }
+
+    const { id } = req.params;
+    const image = req.file ? req.file.filename : null;
+    const { username, password } = req.body;
+
+    const fields = [];
+    const params = [];
+
+    if (image) {
+        fields.push("user_image = ?");
+        params.push(image);
+    }
+    if (username) {
+        fields.push("user_name = ?");
+        params.push(username);
+    }
+    if (password) {
+        const hashedPassword = await bcrypt.hash(password, salt);
+        fields.push("password = ?");
+        params.push(hashedPassword);
+    }
+
+    if (fields.length === 0) {
+        return res
+            .status(400)
+            .json({ error: "No se envió ningún dato ha actualizar." });
+    }
+
+    params.push(id);
+    const sql = `UPDATE users SET ${fields.join(', ')} WHERE user_id = ?`
+    db.query(sql, params, (error, result) => {
+        if (error) {
+            return res
+                .status(500)
+                .json({ error: "Hubo un problema al actualizar sus datos. Vuelva a intentarlo más tarde." });
+        }
+        if (result.affectedRows === 0) {
+            return res
+                .status(404)
+                .json({ error: "No se encontró el usuario ha actualizar." });
+        }
+
+        res.status(201).json({ message: "Datos actualizados con éxito." })
+    })
 }

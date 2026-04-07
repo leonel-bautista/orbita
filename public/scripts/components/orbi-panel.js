@@ -38,7 +38,7 @@ const panelStyle = `
     .overlay {
         position: fixed;
         inset: 0;
-        background: oklch(from black l c h / 70%);
+        background-color: oklch(from var(--color-text-alt) l c h / 85%);
         z-index: 1500;
         opacity: 0;
         visibility: hidden;
@@ -72,7 +72,7 @@ const panelStyle = `
         display: flex;
         position: relative;
         gap: 1em;
-        background: var(--color-bg-light);
+        background: var(--color-secondary-900);
 
         #user-avatar {
             height: 3.5rem;
@@ -132,7 +132,7 @@ const panelStyle = `
         flex-direction: column;
         padding: 1rem 0;
         margin: 0;
-        background: var(--color-bg-dark);
+        background: var(--color-secondary-800);
 
         .aside-links{
             display: flex;
@@ -153,7 +153,7 @@ const panelStyle = `
             font-family: var(--font-title);
 
             &:hover, &:focus-visible{
-                background: var(--color-bg);
+                background: var(--color-secondary-900);
                 color: var(--color-tertiary-900);
             }
         }
@@ -232,7 +232,7 @@ class OrbiPanel extends HTMLElement {
         if (user.isAdmin) {
             const optionsArea = this.shadowRoot.querySelector('#options-area');
             const dashboardLink = document.createElement('a');
-            dashboardLink.href = 'http://admin.app.test:4000';
+            dashboardLink.href = 'http://app.test:4000/admin';
             dashboardLink.className = "aside-links";
             dashboardLink.innerHTML = `
                 <orbi-icon name="dashboard"></orbi-icon>
@@ -248,7 +248,7 @@ class OrbiPanel extends HTMLElement {
         document.dispatchEvent(
             new CustomEvent("user-loaded", { detail: null })
         );
-        window.location.reload();
+        window.location.href = '/';
     }
 
     toggle(){

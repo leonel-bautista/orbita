@@ -23,6 +23,11 @@ export const getEveryTag = (req, res) => {
                 .status(500)
                 .json({ error: "Hubo un problema trayendo las etiquetas. Vuelva a intentarlo más tarde" });
         }
+        if (result.length == 0) {
+            return res
+                .status(404)
+                .json({ error: "No se encontraron resultados." })
+        }
 
         res.json(result);
     })

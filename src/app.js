@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { adminOnly, checkAuth, userOnly } from '#middlewares/authorizations.middleware';
+import { fileUploadHandler } from '#middlewares/uploads.middleware';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -14,22 +15,18 @@ const __dirname = path.dirname(__filename);
 const {
     SERVER_PORT,
     SERVER_HOST,
-    FRONT_URL,
-    API_URL,
-    ADMIN_URL,
+    MAIN_URL,
     NODE_ENV
 } = process.env;
 const PORT = parseInt(SERVER_PORT) || 4000;
 const HOST = SERVER_HOST || '0.0.0.0';
-
-const getHostname = (url) => new URL(url).hostname;
-const apiHost = getHostname(API_URL);
-const adminHost = getHostname(ADMIN_URL);
+const allowedOrigins = [ MAIN_URL ];
 
 const corsConfig = {
-    origin: [ FRONT_URL, API_URL, ADMIN_URL ],
-    credentials: true
-}
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+};
 
 if (NODE_ENV === 'production') app.set('trust proxy', true);
 app.use(cors(corsConfig));
@@ -47,7 +44,7 @@ app.use('/uploads', express.static(uploadsDir));
 // --- APIS ---
 const apiApp = express();
 apiApp.use(express.json());
-// apiApp.use(cors(corsConfig));
+apiApp.use(fileUploadHandler);
 
 import { authRoutes } from '#routes/auth.routes';
 apiApp.use('/auth', authRoutes);
@@ -92,19 +89,16 @@ adminApp.use(express.static(publicDir));
 adminApp.get('/', (req, res) => res.sendFile(path.join(viewsDir, 'dashboard.html')));
 
 // --- DISPATCHER ---
+app.use('/', mainApp);
+app.use('/api', apiApp);
+app.use('/admin', adminApp);
+
 app.use((req, res, next) => {
-    switch (req.hostname){
-        case apiHost:
-            return apiApp(req, res, next);
-        case adminHost:
-            return adminApp(req, res, next);
-        default:
-            return mainApp(req, res, next)
-    }
+    res.status(404).sendFile(path.join(viewsDir, '404.html'));
 })
 
 // --- PRENDER SERVER ---
 app.listen(PORT, HOST, () => {
     console.log('server escuchando en el puerto: ' + PORT);
-    console.log(FRONT_URL);
+    console.log(MAIN_URL);
 })

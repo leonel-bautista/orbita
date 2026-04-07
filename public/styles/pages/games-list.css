@@ -9,8 +9,22 @@ section#games-list {
     grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
     gap: 1em;
     justify-content: space-evenly;
-    container-type: inline-size;
 
+    list-style: none;
+    container-type: inline-size;
+    position: relative;
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        font-style: italic;
+        position: absolute;
+        inset: 0;
+        justify-self: center;
+
+        color: var(--color-text-muted);
+        cursor: default;
+    }
     .listed-game {
         overflow: hidden;
         aspect-ratio: 1 / 1;
@@ -24,6 +38,8 @@ section#games-list {
         justify-content: center;
         position: relative;
 
+        > * { pointer-events: none; }
+
         img {
             object-fit: contain;
             object-position: center;
@@ -31,19 +47,24 @@ section#games-list {
             width: auto;
         }
         .name {
-            color: var(--color-text);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
             margin: .8em 1em;
             font-weight: 700;
             font-size: .9rem;
-            display: none;
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            color: var(--color-text);
+
+            opacity: 0;
+            visibility: hidden;
+            z-index: 100;
+            transition: opacity 200ms ease-out, visibility 200ms ease-out;
         }
 
         &:hover::after, &:hover .name {
-            display: block;
+            visibility: visible;
+            opacity: 1;
         }
     }
     a::after {
@@ -52,9 +73,20 @@ section#games-list {
         height: 100%;
         position: absolute;
         inset: 0;
+
         background: linear-gradient(to top, var(--color-bg), transparent);
-        display: none;
-        pointer-events: none;
+        /* display: none; */
+        visibility: hidden;
+        translate: 0 20px;
+        opacity: 0;
+        transition: opacity 200ms ease-out, visibility 200ms ease-out;
+    }
+}
+
+@keyframes slideIn {
+    to {
+        translate: 0;
+        opacity: 1;
     }
 }
 
@@ -78,7 +110,12 @@ section#games-list {
         padding: .5em 2.8em;
         border: none;
         background: var(--color-bg-dark);
-        border-bottom: 1px solid var(--color-tertiary-900);
+        border-bottom: 1px solid var(--color-text-muted);
         color: var(--color-text);
+
+        &:focus-visible {
+            outline: transparent;
+            border-bottom-color: var(--color-tertiary-900);
+        }
     }
 }

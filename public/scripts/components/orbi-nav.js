@@ -64,22 +64,6 @@ const navStyle = `
             color: var(--color-tertiary-900);
             translate: 0 .1rem;
         }
-
-        /*
-        #games-link::after {
-            content: '';
-            width: calc(100% - 1.6em);
-            height: .2rem;
-            position: absolute;
-
-            inset: 0;
-            align-self: end;
-            justify-self: center;
-            border-radius: 9999px;
-
-            background: var(--color-tertiary-900);
-        }
-        */
     }
     nav #user-area:has(#login-link) {
         #login-link {
@@ -96,10 +80,6 @@ const navStyle = `
                 var(--color-primary-900) 95%
                 );
             border-radius: .3em;
-
-            transition: background-position 150ms ease-in-out, color 150ms ease-in-out;
-
-            &:hover, &:focus-visible {  }
 
             orbi-icon { height: 1rem; }
             span { place-content: center; }

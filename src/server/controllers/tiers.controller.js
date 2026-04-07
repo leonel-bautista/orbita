@@ -23,6 +23,11 @@ export const getEveryTier = (req, res) => {
                 .status(500)
                 .json({ error: "Hubo un problema trayendo los planes. Vuelva a intentarlo más tarde" });
         }
+        if (result.length == 0) {
+            return res
+                .status(404)
+                .json({ error: "No se encontraron resultados." })
+        }
 
         res.json(result);
     })
@@ -35,7 +40,7 @@ export const createTier = (req, res) => {
             .json({ error: "Hubo un problema comunicandose con la base de datos." });
     }
 
-    const { name, description } = req.body;
+    const { name, description = '' } = req.body;
     const sql = 'INSERT INTO tiers (tier_name, tier_description) VALUES (?, ?)';
 
     db.query(sql, [name, description], (error, result) => {

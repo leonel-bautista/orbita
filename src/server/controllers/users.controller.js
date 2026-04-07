@@ -44,6 +44,11 @@ export const getEveryUser = (req, res) => {
                 .status(500)
                 .json({ error: "Hubo un problema trayendo los usuarios. Vuelva a intentarlo más tarde" });
         }
+        if (result.length == 0) {
+            return res
+                .status(404)
+                .json({ error: "No se encontraron resultados." })
+        }
 
         const mappedResult = result.map(row => ({
             ...row,
@@ -143,12 +148,12 @@ export const updateUser = async (req, res) => {
         if (error) {
             return res
                 .status(500)
-                .json({ error: "Hubo un problema al actualizar el usuario. Vuelva a intentarlo más tarde" });
+                .json({ error: "Hubo un problema al actualizar el usuario. Vuelva a intentarlo más tarde." });
         }
         if (result.affectedRows === 0) {
             return res
                 .status(404)
-                .json({ error: "No se encontró el usuario ha actualizar" });
+                .json({ error: "No se encontró el usuario ha actualizar." });
         }
 
         res.status(201).json({ message: "Usuario actualizado con éxito.", id })

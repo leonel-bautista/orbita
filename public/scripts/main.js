@@ -7,13 +7,10 @@ import './components/orbi-panel.js'
 import { getProfile } from './client.js';
 
 (async function loadSession() {
-    let user = null;
+    const res = await getProfile();
+    const user = res.ok ? res.body : null;
 
-    try {
-        const res = await getProfile();
-        user = res.ok ? res.body : null
-    }
-    catch (error) {}
+    const userLoaded = new CustomEvent('user-loaded', { detail: user });
 
-    document.dispatchEvent(new CustomEvent('user-loaded', { detail: user }));
+    document.dispatchEvent(userLoaded);
 })();

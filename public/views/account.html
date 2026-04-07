@@ -22,79 +22,101 @@
     <main>
         <nav id="account-sidebar">
             <ul>
-                <li><a href="#" data-view="profile" class="active">Perfil</a></li>
-                <li><a href="#" data-view="accounts">Cuentas</a></li>
-                <li><a href="#" data-view="libraries">Librerías</a></li>
+                <li><a href="" data-view="profile" class="active">Perfil</a></li>
+                <li><a href="" data-view="sync">Cuentas</a></li>
+                <li><a href="" data-view="libraries">Biblioteca</a></li>
             </ul>
         </nav>
 
-        <section id="account-content">
-<div id="profile-view" class="content-view">
-  <div class="account-header">
-    <div class="image-wrapper">
-      <img id="image" alt="Imagen de perfil">
-      <button class="edit-field-btn image-btn" data-field="image" title="Cambiar foto">
-        <orbi-icon name="image"></orbi-icon>
-      </button>
-    </div>
+        <article id="account-content">
+            <section id="profile-view" class="content-view">
+                <div class="image-container">
+                    <img id="image" alt="Foto de perfil">
+                    <button class="edit-btn image-btn" data-field="image" title="Cambiar foto de perfil.">
+                        <orbi-icon name="image"></orbi-icon>
+                    </button>
+                </div>
 
-    <div class="account-header-info">
-      <h2>
-        <span id="username"></span>
-        <button class="edit-field-btn" data-field="username" title="Editar usuario">
-          <orbi-icon name="edit"></orbi-icon>
-        </button>
-      </h2>
+                <div class="username-container">
+                    <h2 id="username"></h2>
+                    <button class="edit-btn username-btn" data-field="user" title="Cambiar nombre de usuario.">
+                        <orbi-icon name="edit"></orbi-icon>
+                    </button>
+                </div>
 
-      <p>
-        <span id="email"></span>
-      </p>
-    </div>
-  </div>
+                <span id="email"></span>
 
-  <div class="account-details">
-    <div>
-      <h4>Suscripción</h4>
-      <span id="tier"></span>
-    </div>
+                <div class="tier-container">
+                    <h4>Suscripción</h4>
+                    <span id="tier"></span>
+                </div>
 
-    <div>
-      <button id="change-password-btn" data-field="password" class="password-btn">
-        <span>Cambiar Contraseña</span>
-      </button>
-    </div>
-  </div>
-</div>
+                <button class="edit-btn password-btn" data-field="password" title="Cambiar contraseña.">Cambiar contraseña</button>
+            </section>
 
-<div id="accounts-view" class="content-view hidden">
-    <h2>Cuentas</h2>
-    <p>Sincronizá tus cuentas de plataformas para importar tus bibliotecas de juegos.</p>
+            <section id="sync-view" class="content-view hidden">
+                <h2>Cuentas vinculadas</h2>
+                <p>Vinculá tus cuentas de tus tiendas digitales favoritas para traer tu biblioteca y disfrutar de tus juegos.</p>
 
-    <ul class="sync-list">
-    <li class="sync-item"><a href="#" class="sync-link"><img src="/assets/images/platforms/steam.png" alt="Steam"><span>Steam</span></a></li>
-    <li class="sync-item"><a href="#" class="sync-link"><img src="/assets/images/platforms/epicgames.png" alt="Epic Games"><span>Epic Games</span></a></li>
-    <li class="sync-item"><a href="#" class="sync-link"><img src="/assets/images/platforms/gogcom.png" alt="GOG.COM"><span>GOG.COM</span></a></li>
-    <li class="sync-item"><a href="#" class="sync-link"><img src="/assets/images/platforms/xbox.png"" alt="Xbox"><span>Xbox</span></a></li>
-    <li class="sync-item"><a href="#" class="sync-link"><img src="/assets/images/platforms/eaapp.png" alt="EA App"><span>EA App</span></a></li>
-    <li class="sync-item"><a href="#" class="sync-link"><img src="/assets/images/platforms/battlenet.png" alt="EA App"><span>Battle Net</span></a></li>
-    <li class="sync-item"><a href="#" class="sync-link"><img src="/assets/images/platforms/ubisoft.png" alt="EA App"><span>Ubisoft Connect</span></a></li>
-    </ul>
-</div>
+                <ul class="sync-list">
+                    <li>
+                        <a href="">
+                            <img src="/assets/images/platforms/steam.png" alt="Steam">
+                            <span>Steam</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/assets/images/platforms/epicgames.png" alt="Epic Games">
+                            <span>Epic Games</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/assets/images/platforms/gogcom.png" alt="GOG.COM">
+                            <span>GOG.COM</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/assets/images/platforms/xbox.png" alt="Xbox">
+                            <span>Xbox</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/assets/images/platforms/eaapp.png" alt="EA App">
+                            <span>EA App</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/assets/images/platforms/battlenet.png" alt="Battle.Net">
+                            <span>Battle.Net</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/assets/images/platforms/ubisoft.png" alt="Ubisoft Connect">
+                            <span>Ubisoft Connect</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
 
-<div id="libraries-view" class="content-view hidden"></div>
+            <section id="libraries-view" class="content-view hidden"></section>
+        </article>
 
-<!-- Dialogo reutilizable -->
-<dialog id="edit-dialog" aria-modal="true">
-  <form id="edit-form" method="dialog">
-    <h3 id="dialog-title"></h3>
-    <div id="dialog-body"></div>
-    <menu>
-      <button id="dialog-cancel" type="button">Cancelar</button>
-      <button id="dialog-save" type="submit">Guardar</button>
-    </menu>
-  </form>
-</dialog>
-
+        <dialog id="account-dialog">
+            <h3 id="dialog-title"></h3>
+            <form>
+                <div id="dialog-body"></div>
+                <menu>
+                    <button id="cancel-btn" type="button">Cancelar</button>
+                    <button id="submit-btn" type="submit">Guardar</button>
+                </menu>
+            </form>
+        </dialog>
     </main>
 </body>
 </html>

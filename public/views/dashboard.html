@@ -8,15 +8,15 @@
 
     <link rel="stylesheet" href="../styles/pages/dashboard.css">
 
-    <!-- <script type="module" src="../scripts/main.js"></script> -->
+    <script type="module" src="../scripts/main.js"></script>
     <script type="module" src="../scripts/pages/dashboard.js"></script>
 </head>
 <body>
     <nav id="sidebar">
         <div class="sidebar-header">
             <orbi-logo></orbi-logo>
-            <button id="toggle-btn">
-            <orbi-icon name="arrow-back"></orbi-icon>
+            <button id="toggle-sidebar-btn">
+                <orbi-icon name="arrow-back"></orbi-icon>
             </button>
         </div>
 
@@ -25,7 +25,7 @@
                 <span>Principal</span>
             </div>
             <li>
-                <a href="app.test:4000">
+                <a href="/">
                     <orbi-icon name="home"></orbi-icon>
                     <span>Volver a Inicio</span>
                 </a>
@@ -131,7 +131,7 @@
 
         <div id="table-view" class="content-view hidden">
             <div class="table-header">
-                <h2 id="table-title">
+                <h2 class="table-title">
                     <orbi-icon name="tables"></orbi-icon>
                     <span></span>
                 </h2>
@@ -157,16 +157,19 @@
 
         <dialog>
             <div class="dialog-header">
-                <h3 id="dialog-title">
-                    <orbi-icon name="add"></orbi-icon>
-                    <span>Crear</span>
-                </h3>
+                <h2 class="dialog-title"></h2>
                 <button id="close-dialog-btn">
                     <orbi-icon name="cross"></orbi-icon>
                 </button>
             </div>
 
-            <form></form>
+            <form>
+                <div class="form-body"></div>
+                <menu>
+                    <button type="button" id="cancel-btn">Cancelar</button>
+                    <button type="submit" id="submit-btn">Guardar</button>
+                </menu>
+            </form>
         </dialog>
     </main>
 </body>

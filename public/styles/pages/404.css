@@ -1,0 +1,35 @@
+main {
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    gap: 1em;
+    place-items: center;
+    place-content: center;
+
+    h1 {
+        font-family: var(--font-title);
+        font-size: 3rem;
+        font-weight: 600;
+
+        color: var(--color-primary-800);
+        cursor: default;
+        opacity: .5;
+    }
+
+    p {
+        font-size: 1.15rem;
+        color: var(--color-text);
+    }
+
+    a {
+        padding: .8rem 1.2rem;
+        font-family: var(--font-title);
+        font-size: .9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: .3em;
+
+        color: var(--color-text);
+        background: radial-gradient(ellipse at top left, var(--color-primary-700) 55%, 55.1%, var(--color-primary-800) 80%, 80.1%, var(--color-primary-900) 95%);
+    }
+}

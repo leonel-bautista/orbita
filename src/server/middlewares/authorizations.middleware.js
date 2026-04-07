@@ -2,9 +2,8 @@ import jwt from "jsonwebtoken";
 
 const {
     JWT_SECRET,
-    FRONT_URL,
     COOKIE_NAME,
-    ADMIN_URL
+    URL
 } = process.env;
 
 function extractToken(req){
@@ -35,12 +34,10 @@ export const checkAuth = (req, res, next) => {
 }
 
 export const userOnly = (req, res, next) => {
-    // if (req.method === 'OPTIONS') return res.sendStatus(204);
-
     if (!req.user){
         if (req.accepts('html')){
             const nextUrl = buildNextAbsolute(req);
-            const loginThenNext = `${FRONT_URL}/login?next=${nextUrl}`;
+            const loginThenNext = `${URL}/login?next=${nextUrl}`;
 
             return res.redirect(loginThenNext)
         }
@@ -52,26 +49,21 @@ export const userOnly = (req, res, next) => {
 }
 
 export const adminOnly = (req, res, next) => {
-    // if (req.method === 'OPTIONS') return res.sendStatus(204);
-
     if (!req.user){
         if (req.accepts('html')){
             const nextUrl = buildNextAbsolute(req);
-            const loginThenNext = `${FRONT_URL}/login?next=${nextUrl}`;
+            const loginThenNext = `${URL}/login?next=${nextUrl}`;
 
             return res.redirect(loginThenNext)
         }
         return res
             .status(401)
-            .json({ error: "(❌) Debe iniciar sesión para seguir." })
+            .json({ error: "Debe iniciar sesión para seguir." })
     }
 
-    const host = (req.get('X-Forwarded-Host') || req.get('Host') || '').split(":")[0];
-    const adminHost = new URL(ADMIN_URL).hostname;
-    
-    if (host !== adminHost || req.user.auth !== 'admin'){
-        console.error("(❌) Acceso denegado.");
-        return res.redirect(FRONT_URL);
+    if (req.user.auth !== 'admin'){
+        console.error("Acceso denegado.");
+        return res.redirect(URL);
     }
     next();
 }

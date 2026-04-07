@@ -1,21 +1,13 @@
-const API_URL = "http://api.app.test:4000";
+const API_URL = "http://leonel.alwaysdata.net/api";
 
 export async function request(path, options = {}) {
-    const res = await fetch(`${API_URL}${path}`, {
-        headers: {
-            'Content-Type': 'application/json',
-            ...(options.headers || {})
-        },
+    const res = await fetch(`${API_URL + path}`, {
         credentials: 'include',
-        ...options
+        ...options,
     });
-
     if (res.status === 204) return null;
 
-    let data = {}
-    try {
-        data = await res.json();
-    } catch {}
+    const data = await res.json();
 
     return {
         status: res.status,

@@ -1,441 +1,462 @@
-/* ===========================
-   Layout principal
-   =========================== */
 main {
-  width: 100%;
-  height: 100dvh;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: auto 1fr;
-}
-
-/* Sidebar */
-#account-sidebar {
-  width: max(200px, 25dvw);
-  place-content: center;
-}
-#account-sidebar ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: .5em;
-    height: 100%;
-    padding-inline: 2em;
-    justify-content: center;
-}
-#account-sidebar li {
-  border-radius: .5em;
-  overflow: hidden;
-}
-#account-sidebar a {
-  display: block;
-  text-decoration: none;
-  color: var(--color-text-muted);
-  padding: .8em 1em;
-  font-weight: 500;
-  font-size: 1rem;
-}
-#account-sidebar a.active {
-  background: var(--color-secondary-900);
-  font-weight: 800;
-  color: var(--color-tertiary-900);
-}
-#account-sidebar a:not(.active):hover {
-  background: var(--color-bg-light);
-}
-
-/* Contenido principal */
-#account-content {
-  place-content: center;
-  padding: 1.5em;
-}
-
-/* ===========================
-   Botones de edición por campo
-   =========================== */
-.edit-field-btn {
-  background: var(--color-text-alt);
-  border: none;
-  cursor: pointer;
-  vertical-align: middle;
-  padding: .4em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: inherit;
-  aspect-ratio: 1 / 1;
-  border-radius: 999px;
-  color: var(--color-text-muted);
-}
-
-.account-details {
-  display: grid;
-  gap: 2em;
-
-  div {
     display: grid;
-  }
-  h4 {
-      font-weight: 400;
-      color: var(--color-text-muted);
-    }
-  #tier {
-    font-size: 1.4rem;
-    font-weight: 800;
-  }
+    grid-auto-flow: column;
+    grid-template-columns: auto 1fr;
 }
-
-#profile-view {
-  background: var(--color-secondary-800);
-  height: 70dvh;
-  border-radius: 1em;
-  overflow: hidden;
-  display: grid;
-  grid-auto-flow: row;
-  padding: 4em 8em;
-  width: fit-content;
-  height: fit-content;
-  gap: 3em;
-  justify-self: center;
-}
-
-#accounts-view {
-  display: grid;
-
-  p {
-    color: var(--color-text-muted);
-  }
-  .sync-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 2em;
-    display: grid;
-    gap: .6rem;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-
-    .sync-item {
-      border-radius: 10px;
-      overflow: hidden;
-      background: var(--color-bg);
-      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-    }
-    .sync-link {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      padding: .6rem .8rem;
-      text-decoration: none;
-      color: inherit;
-      width: 100%;
-
-      img {
-        aspect-ratio: 1 / 1;
-        height: 44px;
-        object-fit: contain;
-        border-radius: 6px;
-        background: #fff;
-        padding: .25rem;
-        flex-shrink: 0;
-      }
-      span {
-        font-weight: 700;
-        font-size: .98rem;
-        color: var(--color-text);
-      }
-
-      &:hover {
-        background: var(--color-secondary-800);
-      }
-    }
-  }
-}
-
-#libraries-view {
-  h2 {
-    position: sticky;
-    top: 0;
-    padding-block: 1.5em;
-  }
-}
-#libraries-view ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
-    gap: 1em;
-    justify-content: space-evenly;
-    container-type: inline-size;
-
-    .listed-game {
-        overflow: hidden;
-        aspect-ratio: 1 / 1;
-        border-radius: 1em;
-    }
-    a {
-        text-decoration: none;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        position: relative;
-
-        img {
-            object-fit: contain;
-            object-position: center;
-            height: 100%;
-            width: auto;
-        }
-        .name {
-            color: var(--color-text);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            margin: .8em 1em;
-            font-weight: 700;
-            font-size: .9rem;
-            display: none;
-        }
-
-        &:hover::after, &:hover .name {
-            display: block;
-        }
-    }
-    a::after {
-        content: '';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, var(--color-bg), transparent);
-        display: none;
-        pointer-events: none;
-    }
-}
-
-/* ===========================
-   Image wrapper y botón sobre la imagen
-   =========================== */
-.image-wrapper {
-    position: relative;
-    display: inline-block;
-    width: fit-content;
-    height: fit-content;
-}
-
-.image-wrapper img#image {
-  height: 200px;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  border-radius: 1em;
-  background: linear-gradient(180deg, #f6f6f6, #efefef);
-  aspect-ratio: 1 / 1;
-}
-
-/* botón sobre la imagen */
-.image-wrapper .image-btn {
-  position: absolute;
-  right: -5%;
-  bottom: -5%;
-  border: .3em solid var(--color-secondary-800);
-  padding: .8em;
-
-  orbi-icon { height: 1.4rem; }
-}
-
-/* ===========================
-   Botón Cambiar Contraseña
-   =========================== */
-.password-btn {
-  display: flex;
-  align-items: center;
-  padding-block: 1.1em;
-  border-radius: .8em;
-  border: none;
-  background: var(--color-tertiary-700);
-  cursor: pointer;
-  font-weight: 800;
-  color: var(--color-text-alt);
-  justify-content: center;
-
-  &:hover { background-color: var(--color-tertiary-800); }
-}
-
-.account-header {
-  display: grid;
-  gap: 3em;
-  grid-auto-flow: column;
-  height: min-content;
-
-  h2 {
-    display: flex;
-    gap: .5em;
-
-    #username { font-weight: 800; }
-
-    .edit-field-btn {
-      orbi-icon { height: 1.1rem; }
-    }
-  }
-}
-
-.account-header-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-span#email {
-  color: var(--color-text-muted);
-}
-
-/* ===========================
-   Dialogo nativo (centrado) y uso de backdrop nativo
-   =========================== */
-/* Centrado y apariencia del dialog; se apoya en showModal() y ::backdrop */
-#edit-dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  border-radius: 0 .8em .8em 0;
-  padding: 2em;
-  width: max(30dvw, 400px);
-  max-width: calc(100% - 32px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  background: var(--color-secondary-900);
-  z-index: 1200;
-  display: none;
-  border: none;
-  border-left: 1em solid var(--color-secondary-700);
-}
-
-/* Mostrar cuando el atributo open está presente (fallback) */
-#edit-dialog[open] {
-  display: block;
-}
-
-/* Estilo del backdrop nativo (cuando el navegador soporta ::backdrop) */
-#edit-dialog::backdrop {
-  background: rgba(0,0,0,0.45);
-}
-
-/* Ajustes del título y estructura */
-#edit-dialog h3 {
-  margin: 0 0 8px 0;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-/* inputs dentro del dialog */
-#dialog-body input[type="text"],
-#dialog-body input[type="email"],
-#dialog-body input[type="password"],
-#dialog-body input[type="file"] {
-  width: 100%;
-  box-sizing: border-box;
-  padding: .8em;
-  background-color: var(--color-text);
-  border: none;
-  border-radius: .5em;
-}
-
-/* menú de botones del dialog */
-#edit-form {
-  display: grid;
-  gap: 2em;
-
-  #dialog-title {
-    color: var(--color-text);
-    font-weight: 600;
-    font-family: var(--font-title);
-    font-size: 1.2rem;
-    cursor: default;
-    padding-block: .5em;
-    background: var(--color-secondary-800);
-    padding-inline: 1em 0;
-    border-radius: .5em;
-  }
-}
-#edit-form menu {
-  display: flex;
-  justify-content: flex-end;
-  gap: .8em;
-}
-#edit-form menu button {
-  padding: .6em .8em;
-  border-radius: 6px;
-  cursor: pointer;
-}
-#dialog-cancel {
-  background: transparent;
-  box-shadow: inset 0 0 0 1px var(--color-text-muted);
-  border: none;
-  color: var(--color-text);
-}
-#dialog-save {
-  background: var(--color-tertiary-800);
-  color: var(--color-text-alt);
-  border: none;
-}
-
-/* ===========================
-   Previsualización de imagen en el dialog
-   =========================== */
-#dialog-body .image-compare {
-  margin-bottom: 1em;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(2, 1fr);
-}
-#dialog-body .image-compare > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .5em;
-}
-#dialog-body .image-compare img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 2px solid var(--color-text);
-  background: var(--color-bg);
-  object-position: center;
-}
-#dialog-body .image-compare .label {
-  font-size: .8rem;
-  color: var(--color-text-muted);
-  text-align: center;
-  font-weight: 600;
-  cursor: default;
-}
-#dialog-body label {
-  margin-bottom: 1em;
-  display: block;
-  font-size: .9rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-
-  &:last-of-type {
-    margin-top: 1em;
-  }
-}
-input#image-input {
-  cursor: pointer;
-  background: transparent !important;
-  color: var(--color-text) !important;
-  margin-top: 2em;
-  border: 1px solid var(--color-text) !important;
-}
-label[for="image-input"] {
-  display: none !important;
-}
-
-
-#image-preview-small,
-.field-with-btn,
-#edit-account-btn { display: none !important; }
 
 .hidden { display: none !important; }
+
+#account-sidebar {
+    width: max(200px, 25dvw);
+    place-content: center;
+
+    ul {
+        height: 100%;
+        padding: 0;
+        padding-inline: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+        justify-content: center;
+        list-style: none;
+    }
+    li {
+        border-radius: .5em;
+        overflow: hidden;
+    }
+    a {
+        padding: .8em 1em;
+        text-decoration: none;
+        color: var(--color-text-muted);
+        display: block;
+
+        &.active {
+            font-weight: 800;
+            color: var(--color-tertiary-900);
+            background-color: var(--color-secondary-900);
+        }
+        &:not(.active):hover {
+            background: var(--color-bg-light);
+        }
+    }
+}
+
+
+#account-content {
+    place-content: center;
+    padding: 1.5em;
+
+    .edit-btn {
+        aspect-ratio: 1 / 1;
+        height: 2rem;
+        padding: .6em;
+        border: none;
+        border-radius: .5em;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        color: var(--color-text-muted);
+        background-color: var(--color-secondary-800);
+
+        orbi-icon {
+            height: 100%;
+            pointer-events: none;
+        }
+
+        &:hover {
+            color: var(--color-text-alt) !important;
+            background-color: var(--color-tertiary-800) !important;
+        }
+    }
+}
+
+#account-content > #profile-view {
+    display: grid;
+    grid-template-areas: 'image username'
+                         'image email'
+                         'image tier'
+                         'pw-btn pw-btn';
+    column-gap: 3em;
+    justify-self: center;
+    overflow: hidden;
+
+    .image-container {
+        grid-area: image;
+
+        width: fit-content;
+        height: fit-content;
+        position: relative;
+        display: inline-block;
+
+        #image {
+            aspect-ratio: 1 / 1;
+            height: 200px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            border-radius: .5em;
+            background-color: var(--color-text-alt);
+        }
+        .image-btn {
+            height: 20%;
+            position: absolute;
+            right: -5%;
+            bottom: -5%;
+            outline: .4em solid var(--color-bg-dark);
+        }
+    }
+
+    .username-container {
+        grid-area: username;
+
+        height: fit-content;
+        display: flex;
+        gap: .5em;
+
+        #username { font-weight: 800; }
+    }
+
+    #email {
+        grid-area: email;
+        color: var(--color-text-muted);
+    }
+
+    .tier-container {
+        grid-area: tier;
+
+        height: fit-content;
+        display: grid;
+
+        h4 {
+            font-weight: 400;
+            align-self: end;
+            color: var(--color-text-muted);
+        }
+        #tier {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+    }
+
+    .password-btn {
+        grid-area: pw-btn;
+
+        height: 50px;
+        width: 100%;
+        padding-block: 1.1em;
+        margin-top: 4em;
+
+        font-weight: 800;
+        color: var(--color-text-muted);
+    }
+}
+
+#account-content > #sync-view {
+    display: grid;
+
+    p { color: var(--color-text-muted); }
+
+    .sync-list {
+        margin-top: 2em;
+        list-style: none;
+        display: grid;
+        gap: .6em;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+        li {
+            border-radius: .5em;
+            background-color: var(--color-bg);
+            overflow: hidden;
+        }
+        a {
+            width: 100%;
+            padding: .6em .8em;
+            text-decoration: none;
+            display: flex;
+            gap: .75em;
+            align-items: center;
+            color: inherit;
+
+            img {
+                aspect-ratio: 1 / 1;
+                height: 40px;
+                padding: .25em;
+                object-fit: contain;
+                border-radius: .5em;
+                flex-shrink: 0;
+                background-color: var(--color-text);
+            }
+            span {
+                font-weight: 700;
+                color: var(--color-text);
+            }
+
+            &:hover {
+                background-color: var(--color-secondary-800);
+            }
+        }
+    }
+}
+
+#account-content > #libraries-view {
+    h2 {
+        padding-block: 1.5em;
+        top: 0;
+        position: sticky;
+    }
+    p { color: var(--color-text-muted); }
+
+    ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
+        gap: 1em;
+        justify-content: space-evenly;
+
+        list-style: none;
+        container-type: inline-size;
+
+        li {
+            aspect-ratio: 1 /1;
+            border-radius: 1em;
+            overflow: hidden;
+        }
+        a {
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            position: relative;
+
+            img {
+                height: 100%;
+                object-fit: contain;
+                object-position: center;
+            }
+            span {
+                font-size: .9rem;
+                font-weight: 700;
+                margin: .8em 1em;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                display: none;
+
+                color: var(--color-text);
+                z-index: 100;
+            }
+
+            &:hover::after, &:hover span {
+                display: block;
+            }
+        }
+        a::after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--color-bg), transparent);
+            display: none;
+            pointer-events: none;
+        }
+    }
+}
+
+#account-dialog {
+    /* width: clamp(max(30dvw, 400px), 640px, calc(100% - 2em)); */
+    width: min(max(30dvw, 500px), calc(100% - 2em));
+    padding: 2em;
+    margin: auto;
+    border: none;
+    border-radius: .5em;
+    background-color: var(--color-secondary-800);
+
+    &::backdrop { background-color: oklch(from var(--color-text-alt) l c h / 85%); }
+
+    #dialog-title {
+        padding: .5em 1em;
+        font-size: 1.2rem;
+        font-family: var(--font-title);
+        border-radius: .5em;
+
+        color: var(--color-text-muted);
+        background-color: var(--color-secondary-900);
+        cursor: default;
+    }
+}
+#account-dialog > form {
+    margin-top: 3em;
+    display: grid;
+    gap: 2em;
+
+    .input-container {
+        position: relative;
+
+        &:not(:first-of-type) { margin-top: 2rem; }
+        &:focus-within,
+        &:has(input:not(:placeholder-shown)),
+        &.error {
+            label {
+                margin: 0;
+                font-size: .75em;
+                translate: 0 -100%;
+            }
+        }
+        &:focus-within {
+            label { color: var(--color-tertiary-900); }
+            input { border-bottom-color: var(--color-tertiary-900); }
+        }
+        &.error {
+            input { border-color: var(--color-error); }
+            label { color: var(--color-error); }
+        }
+    }
+    label, input {
+        font-size: .9rem;
+        display: block;
+        caret-color: var(--color-text);
+    }
+    label {
+        height: fit-content;
+        inset: 0;
+        margin: auto;
+        margin-top: .4em;
+        position: absolute;
+
+        color: var(--color-text-muted);
+
+        transition: translate 150ms ease,
+            color 150ms ease,
+            font-size 150ms ease;
+        pointer-events: none;
+    }
+    input {
+        width: 100%;
+        height: 2rem;
+        padding: .4em .2em;
+
+        font-family: var(--font-input);
+        border: none;
+        border-bottom: 2px solid var(--color-secondary-900);
+
+        background: transparent;
+        color: var(--color-text);
+        outline: none;
+
+        transition: border-color 150ms ease;
+
+        &[type="file"] {
+            height: 3rem;
+            align-content: center;
+            cursor: pointer;
+        }
+        &[type="password"] {
+            padding-right: 2em;
+
+            &::-ms-reveal,
+            &::-webkit-password-toggle-button {
+                display: none;
+            }
+        }
+    }
+    orbi-icon {
+        height: 100%;
+        color: var(--color-text-muted);
+        pointer-events: none;
+    }
+
+    menu {
+        display: flex;
+        justify-content: flex-end;
+        gap: .8em;
+
+        button {
+            padding: .6em .8em;
+            border: none;
+            border-radius: .5em;
+            cursor: pointer;
+        }
+
+        #cancel-btn {
+            color: var(--color-text-muted);
+            background-color: inherit;
+            box-shadow: inset 0 0 0 1px var(--color-text-muted);
+        }
+        #submit-btn {
+            color: var(--color-text-alt);
+            background-color: var(--color-tertiary-800);
+        }
+    }
+}
+#account-dialog > form .btn-container {
+    aspect-ratio: 1 / 1;
+    height: 2rem;
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+
+    background: transparent;
+
+    .toggle-pw-btn {
+        aspect-ratio: 1 / 1;
+        height: 1.2rem;
+        border: none;
+
+        background: transparent;
+        color: var(--color-text-muted);
+
+        &:not(:disabled) { cursor: pointer; }
+    }
+}
+#account-dialog > form .image-compare {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    gap: 2em;
+
+    .image-preview {
+        aspect-ratio: 1 / 1;
+        height: 180px;
+        border-radius: .5em;
+        position: relative;
+
+        &::before {
+            width: 100%;
+            height: fit-content;
+            padding-block: 1em;
+            position: absolute;
+            bottom: 100%;
+
+            font-size: .8rem;
+            text-align: center;
+            color: var(--color-text-muted);
+            pointer-events: none;
+        }
+        &:has(#current-image-preview)::before { content: 'Actual'; }
+        &:has(#new-image-preview)::before { content: 'Nueva'; }
+
+        &:has(img[src=""]) { background-color: var(--color-secondary-900); }
+    }
+    img {
+        aspect-ratio: 1 / 1;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: .5em;
+        display: block;
+
+        color: var(--color-text);
+        background-color: var(--color-secondary-900);
+
+        &[src=""] { display: none !important; }
+    }
+}

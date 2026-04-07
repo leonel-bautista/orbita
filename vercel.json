@@ -1,31 +1,7 @@
 {
-  "version": 2,
-  "name": "orbita",
-  "builds": [
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://nextone.alwaysdata.net/api/:path*"
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "https://nextone.alwaysdata.net/admin/:path*"
-    }
-  ],
-  "cleanUrls": true,
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "no-referrer-when-downgrade" }
-      ]
-    }
-  ]
+    "version": 2,
+    "builds": [
+        { "src": "public/**", "use": "@vercel/static" }
+    ],
+    "cleanUrls": true
 }
