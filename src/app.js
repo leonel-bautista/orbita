@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 import { adminOnly, checkAuth, userOnly } from '#middlewares/authorizations.middleware';
 import { fileUploadHandler } from '#middlewares/uploads.middleware';
+import { sendHtmlFile } from '#middlewares/files.middleware';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +21,7 @@ const {
 } = process.env;
 const PORT = parseInt(SERVER_PORT) || 4000;
 const HOST = SERVER_HOST || '0.0.0.0';
-const allowedOrigins = [ MAIN_URL ];
+const allowedOrigins = MAIN_URL ? [ MAIN_URL ] : [];
 
 const corsConfig = {
     origin: allowedOrigins,
@@ -34,12 +35,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(checkAuth)
-
 const publicDir = path.join(__dirname, '..', 'public');
 const viewsDir = path.join(publicDir, 'views');
 const uploadsDir = path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(uploadsDir));
+
+app.use(checkAuth)
 
 // --- APIS ---
 const apiApp = express();
@@ -71,31 +72,29 @@ apiApp.use('/tables/users', usersRoutes);
 const mainApp = express();
 mainApp.use(express.static(publicDir));
 
-mainApp.get('/', (req, res) => res.sendFile(path.join(viewsDir, 'index.html')));
-mainApp.get('/register', (req, res) => res.sendFile(path.join(viewsDir, 'register.html')));
-mainApp.get('/login', (req, res) => res.sendFile(path.join(viewsDir, 'login.html')));
-mainApp.get('/juegos', (req, res) => res.sendFile(path.join(viewsDir, 'games-list.html')));
-mainApp.get('/juegos/:id', (req, res) => res.sendFile(path.join(viewsDir, 'game.html')));
-mainApp.get('/aplicaciones', (req, res) => res.sendFile(path.join(viewsDir, 'apps-list.html')));
-mainApp.get('/planes', (req, res) => res.sendFile(path.join(viewsDir, 'subscriptions.html')));
-mainApp.get('/acerca-de', (req, res) => res.sendFile(path.join(viewsDir, 'about.html')));
-mainApp.get('/cuenta', userOnly, (req, res) => res.sendFile(path.join(viewsDir, 'account.html')));
+mainApp.get('/', sendHtmlFile(viewsDir, 'index.html'));
+mainApp.get('/register', sendHtmlFile(viewsDir, 'register.html'));
+mainApp.get('/login', sendHtmlFile(viewsDir, 'login.html'));
+mainApp.get('/juegos', sendHtmlFile(viewsDir, 'games-list.html'));
+mainApp.get('/juegos/:id', sendHtmlFile(viewsDir, 'game.html'));
+mainApp.get('/aplicaciones', sendHtmlFile(viewsDir, 'apps-list.html'));
+mainApp.get('/planes', sendHtmlFile(viewsDir, 'subscriptions.html'));
+mainApp.get('/acerca-de', sendHtmlFile(viewsDir, 'about.html'));
+mainApp.get('/cuenta', userOnly, sendHtmlFile(viewsDir, 'account.html'));
 
 // --- FRONT ADMINISTRATIVO ---
 const adminApp = express();
 adminApp.use(adminOnly)
 adminApp.use(express.static(publicDir));
 
-adminApp.get('/', (req, res) => res.sendFile(path.join(viewsDir, 'dashboard.html')));
+adminApp.get('/', sendHtmlFile(viewsDir, 'dashboard.html'));
 
 // --- DISPATCHER ---
 app.use('/', mainApp);
 app.use('/api', apiApp);
 app.use('/admin', adminApp);
 
-app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(viewsDir, '404.html'));
-})
+app.use(sendHtmlFile(viewsDir, '404.html'));
 
 // --- PRENDER SERVER ---
 app.listen(PORT, HOST, () => {

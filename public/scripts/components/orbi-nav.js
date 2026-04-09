@@ -122,16 +122,16 @@ template.innerHTML = `
     <style>${navStyle}</style>
     <nav>
         <div id="logo-area">
-            <a href="/" class="nav-links" id="home-link">
+            <a href="." class="nav-links" id="home-link">
                 <orbi-logo></orbi-logo>
             </a>
         </div>
 
         <ul id="pages-area">
-            <li><a href="/juegos" class="nav-links" id="games-link">juegos</a></li>
-            <li><a href="/aplicaciones" class="nav-links" id="downloads-link">aplicaciones</a></li>
-            <li><a href="/planes" class="nav-links" id="news-link">planes</a></li>
-            <li><a href="/acerca-de" class="nav-links" id="about-link">acerca de</a></li>
+            <li><a href="juegos" class="nav-links" id="games-link">juegos</a></li>
+            <li><a href="aplicaciones" class="nav-links" id="downloads-link">aplicaciones</a></li>
+            <li><a href="planes" class="nav-links" id="news-link">planes</a></li>
+            <li><a href="acerca-de" class="nav-links" id="about-link">acerca de</a></li>
         </ul>
 
         <div id="user-area"></div>
@@ -192,7 +192,7 @@ class OrbiNav extends HTMLElement {
 
         if (!user) {
             const loginLink = document.createElement('a');
-            loginLink.href = `/login?next=${encodeURIComponent(location.pathname)}`;
+            loginLink.href = `login?next=${encodeURIComponent(location.pathname)}`;
             loginLink.id = 'login-link';
             loginLink.className = 'nav-links';
             loginLink.innerHTML = `
@@ -212,7 +212,7 @@ class OrbiNav extends HTMLElement {
             openPanelBtn.setAttribute('aria-controls', 'panel');
             openPanelBtn.innerHTML = `
                 <img 
-                    src="${user.image || '/assets/images/default-user-profile.webp'}"
+                    src="${user.image || 'assets/images/default-user-profile.webp'}"
                     alt="Perfil de ${user.username}"
                 >
                 <orbi-icon name="menu-open"></orbi-icon>

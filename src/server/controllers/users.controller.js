@@ -52,7 +52,7 @@ export const getEveryUser = (req, res) => {
 
         const mappedResult = result.map(row => ({
             ...row,
-            image: `/uploads/users/${row.image || 'u-default.png'}`
+            image: `uploads/users/${row.image || 'u-default.png'}`
         }))
 
         res.json(mappedResult);

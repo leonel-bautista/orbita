@@ -75,7 +75,6 @@ section#games-list {
         inset: 0;
 
         background: linear-gradient(to top, var(--color-bg), transparent);
-        /* display: none; */
         visibility: hidden;
         translate: 0 20px;
         opacity: 0;

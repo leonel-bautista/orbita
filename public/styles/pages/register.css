@@ -15,46 +15,8 @@ body > main {
     display: flex;
     flex-direction: column;
 
-    /* border: 0.2rem inset rgba(var(--rgb-black), 0.1);
-    border-radius: 1rem;
-    border-top-right-radius: min(5rem, 20vw);
-    backdrop-filter: blur(5px);
-    background:
-    linear-gradient(
-        -30deg,
-        rgba(var(--rgb-black), 0.4),
-        rgba(var(--rgb-black), 0.2));
-    box-shadow: 0 0 2rem rgba(var(--rgb-black), 0.3); */
-
     z-index: 1000;
-
-    /* &:focus-within::before{
-        width: 96%;
-        height: 96%;
-        box-shadow: inset 0 0 0 0.1rem var(--color-light-cyan);
-    }
-    &:has(#submit-btn + orbi-icon.loading)::before{
-        box-shadow: inset 0 0 0 0.1rem rgba(var(--rgb-black), 0.2);
-    } */
 }
-/* #register-section::before{
-    content: '';
-    width: 97%;
-    height: 97%;
-    inset: 0;
-    margin: auto;
-    
-    border-radius: 1rem;
-    border-top-right-radius: min(5rem, 20vw);
-    
-    background: transparent;
-    box-shadow: inset 0 0 0 0.1rem rgba(var(--rgb-white), 0.1);
-    
-    position: absolute;
-    transition: box-shadow 150ms ease,
-                width 150ms ease, height 150ms ease;
-    pointer-events: none;
-} */
 #register-section{
     .home-link {
         place-self: center;
@@ -257,14 +219,6 @@ form {
         margin-top: min(6vh, 2em);
         font-size: .75rem;
     }
-    /* &:not(button:disabled){
-        orbi-icon, span{
-            filter: drop-shadow(1px 1px 1px var(--color-dark-gray));
-        }
-        &:hover, &:focus-visible{
-            background-position: 0%;
-        }
-    } */
 }
 
 @keyframes spin {
@@ -287,6 +241,4 @@ orbi-icon.loading {
 #submit-btn > orbi-icon.loading {
     inset: 0;
     margin: auto;
-    /* filter: drop-shadow(0 0 3px var(--color-lighter-cyan))
-            drop-shadow(0 0 3px var(--color-black)); */
 }

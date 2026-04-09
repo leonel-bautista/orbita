@@ -227,6 +227,4 @@ form {
 
     animation: spin 800ms linear infinite;
     transform-origin: center center;
-    /* filter: drop-shadow(0 0 3px var(--color-lighter-cyan))
-            drop-shadow(0 0 3px var(--color-black)); */
 }

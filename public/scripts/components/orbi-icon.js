@@ -52,7 +52,7 @@ class OrbitaIcon extends HTMLElement {
 
     _updateIcon(name) {
         if (!name) return this._use.setAttribute('href', '');
-        this._use.setAttribute('href', `/assets/sprite.svg#${name}`);
+        this._use.setAttribute('href', `assets/sprite.svg#${name}`);
     }
 }
 

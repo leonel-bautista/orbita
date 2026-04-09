@@ -216,7 +216,7 @@ form.addEventListener('submit', async (e) => {
             return showError(form, ERR_MESSAGES.BAD_REGISTER);
         }
         toggleSpinner(submitBtn, false);
-        window.location.href = body.redirect || "/";
+        window.location.href = body.redirect || ".";
     }
     catch{
         toggleSpinner(submitBtn, false, controls);

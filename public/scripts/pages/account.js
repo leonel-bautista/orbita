@@ -175,7 +175,7 @@ function loadProfileView() {
         if (!user) return;
 
         document.title = `Órbita ⪼ ${user.username}`;
-        image.src = user.image || '/uploads/users/u-default.png';
+        image.src = user.image || 'uploads/users/u-default.png';
         username.textContent = user.username || '-';
         email.textContent = user.email || '-';
         tier.textContent = user.tier || '-';
@@ -207,10 +207,10 @@ async function loadLibrariesView() {
         item.className = 'listed-game';
 
         const link = document.createElement('a');
-        link.href = `/juegos/${game.id}`;
+        link.href = `juegos/${game.id}`;
 
         const image = document.createElement('img');
-        image.src = game.image || '/uploads/games/g-default.png';
+        image.src = game.image || 'uploads/games/g-default.png';
         image.alt = game.name;
 
         const name = document.createElement('span');
@@ -240,7 +240,7 @@ function setupDialog(field) {
             dialogBody.innerHTML = `
                 <div class="image-compare">
                     <div class="image-preview">
-                        <img id="current-image-preview" src="${currentUser.image || '/uploads/users/u-default.png'}" alt="Imágen actual">
+                        <img id="current-image-preview" src="${currentUser.image || 'uploads/users/u-default.png'}" alt="Imágen actual">
                     </div>
                     <div class="image-preview">
                         <img id="new-image-preview" src="" alt="Imágen nueva">

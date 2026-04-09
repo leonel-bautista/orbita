@@ -94,7 +94,7 @@ export const getEveryGame = (req, res) => {
 
         const mappedResult = result.map(row => ({
             ...row,
-            image: `/uploads/games/${row.image || 'g-default.jpg'}`
+            image: `uploads/games/${row.image || 'g-default.jpg'}`
         }))
 
         res.json(mappedResult);

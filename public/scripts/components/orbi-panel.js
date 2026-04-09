@@ -19,7 +19,7 @@ const panel = `
                 <orbi-icon name="user"></orbi-icon>
                 <span>VER CUENTA</span>
             </a></li>
-            <li><a href="/soporte" class="aside-links" id="support-link">
+            <li><a href="soporte" class="aside-links" id="support-link">
                 <orbi-icon name="support"></orbi-icon>
                 <span>SOPORTE</span>
             </a></li>
@@ -214,25 +214,25 @@ class OrbiPanel extends HTMLElement {
             this._overlay.classList.remove('open');
             this._aside.setAttribute('aria-hidden', 'true');
 
-            this._userAvatar.src = '/assets/images/default-user-profile.webp';
+            this._userAvatar.src = 'assets/images/default-user-profile.webp';
             this._userAvatar.alt = 'Perfil';
             this._userTier.textContent = 'Base';
             this._userAlias.textContent = 'user';
-            this._accountLink.href = '/login';
+            this._accountLink.href = 'login';
 
             return
         }
 
-        this._userAvatar.src = user.image || '/assets/images/default-user-profile.webp';
+        this._userAvatar.src = user.image || 'assets/images/default-user-profile.webp';
         this._userAvatar.alt = `Perfil de ${user.username}`;
         this._userTier.textContent = user.tier;
         this._userName.textContent = user.username;
-        this._accountLink.href = '/cuenta';
+        this._accountLink.href = 'cuenta';
 
         if (user.isAdmin) {
             const optionsArea = this.shadowRoot.querySelector('#options-area');
             const dashboardLink = document.createElement('a');
-            dashboardLink.href = 'http://app.test:4000/admin';
+            dashboardLink.href = 'https://leonel.alwaysdata.net/orbita/admin';
             dashboardLink.className = "aside-links";
             dashboardLink.innerHTML = `
                 <orbi-icon name="dashboard"></orbi-icon>
@@ -244,14 +244,14 @@ class OrbiPanel extends HTMLElement {
     }
 
     async _onLogout() {
-        const res = await logout();
+        await logout();
         document.dispatchEvent(
             new CustomEvent("user-loaded", { detail: null })
         );
-        window.location.href = '/';
+        window.location.href = '.';
     }
 
-    toggle(){
+    toggle() {
         const isOpening = !this._aside.classList.contains("open");
 
         if (!isOpening) {

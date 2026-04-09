@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- BASE -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Órbita</title>
 
-    <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/pages/game.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/pages/game.css">
 
-    <script type="module" src="../scripts/main.js"></script>
-    <script type="module" src="../scripts/pages/game.js"></script>
+    <script type="module" src="scripts/main.js"></script>
+    <script type="module" src="scripts/pages/game.js"></script>
 </head>
 <body>
     <header>
@@ -20,10 +21,10 @@
     <orbi-panel></orbi-panel>
 
     <main>
-        <div class="game-header">
-            <img src="/uploads/games/g-default.jpg" alt="">
+        <section id="main-info">
+            <img src="" alt="">
 
-            <div class="game-details">
+            <div class="basic-details">
                 <h1 class="name"></h1>
 
                 <div class="tags"></div>
@@ -44,8 +45,9 @@
                     <span class="developer"></span>
                 </div>
             </div>
-        </div>
-        <section id="game-info">
+        </section>
+
+        <section id="extra-info">
             <div class="description-details">
                 <h2 class="title"></h2>
                 <p class="description"></p>

@@ -35,10 +35,10 @@ function renderGamesList(games) {
         item.className = 'listed-game';
         
         const link = document.createElement('a');
-        link.href = `/juegos/${encodeURIComponent(game.id)}`;
+        link.href = `juegos/${encodeURIComponent(game.id)}`;
 
         const image = document.createElement('img');
-        image.src = game.image || '/uploads/games/g-default.jpg';
+        image.src = game.image || 'uploads/games/g-default.jpg';
         image.alt = game.name || 'Juego';
         
         const title = document.createElement('span');

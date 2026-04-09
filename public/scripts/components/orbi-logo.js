@@ -65,8 +65,8 @@ export class OrbitaLogo extends HTMLElement {
 
     async connectedCallback() {
         try {
-            const res = await fetch('/assets/logo.svg');
-            if (!res.ok) throw new Error('No se pudo cargar el logo svg');
+            const res = await fetch('assets/logo.svg');
+            if (!res.ok) throw new Error('Hubo un problema al intentar cargar el logo.');
             const logo = await res.text();
             this._root.innerHTML = logo;
         } catch (error) {

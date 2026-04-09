@@ -83,7 +83,7 @@ export const getProfile = (req, res) => {
         const user = result[0];
         const mappedResult = {
             ...user,
-            image: `/uploads/users/${user.image || 'u-default.png'}`
+            image: `uploads/users/${user.image || 'u-default.png'}`
         }
 
         res.json(mappedResult);
