@@ -73,3 +73,21 @@ export const fileUploadHandler = (req, res, next) => {
         next()
     })
 }
+
+export const normalizeUploadPath = () => {
+    const rawBase = process.env.BASE_PATH ?? '';
+    const cleanBase = String(rawBase).replace(/^\/+|\/+$/g, '');
+    const base = cleanBase ? '/' + cleanBase : null;
+    if (!base) return (req, res, next) => next();
+
+    const match = base + '/uploads';
+    return (req, res, next) => {
+        try {
+            if (req.url === match || req.url.startsWith(match + '/'))
+                req.url = req.url.slice(base.length);
+        }
+        catch (error) {}
+
+        next();
+    }
+}

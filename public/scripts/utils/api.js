@@ -1,4 +1,4 @@
-const API_URL = "http://leonel.alwaysdata.net/orbita/api";
+const API_URL = "https://leonel.alwaysdata.net/orbita/api";
 
 export async function request(path, options = {}) {
     const res = await fetch(`${API_URL + path}`, {

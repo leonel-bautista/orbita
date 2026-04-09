@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { adminOnly, checkAuth, userOnly } from '#middlewares/authorizations.middleware';
-import { fileUploadHandler } from '#middlewares/uploads.middleware';
+import { fileUploadHandler, normalizeUploadPath } from '#middlewares/uploads.middleware';
 import { sendHtmlFile } from '#middlewares/files.middleware';
 
 const app = express();
@@ -17,7 +17,8 @@ const {
     SERVER_PORT,
     SERVER_HOST,
     MAIN_URL,
-    NODE_ENV
+    NODE_ENV,
+    BASE_PATH
 } = process.env;
 const PORT = parseInt(SERVER_PORT) || 4000;
 const HOST = SERVER_HOST || '0.0.0.0';
@@ -38,6 +39,7 @@ app.use(cookieParser());
 const publicDir = path.join(__dirname, '..', 'public');
 const viewsDir = path.join(publicDir, 'views');
 const uploadsDir = path.join(__dirname, 'uploads');
+app.use(normalizeUploadPath());
 app.use('/uploads', express.static(uploadsDir));
 
 app.use(checkAuth)

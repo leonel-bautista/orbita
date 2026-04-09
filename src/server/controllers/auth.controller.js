@@ -26,7 +26,7 @@ function rngString(length){
     return str;
 }
 function safeRedirect(nextURL, currentOrigin) {
-    const fallback = "/";
+    const fallback = ".";
 
     if (typeof nextURL !== "string") return fallback;
 

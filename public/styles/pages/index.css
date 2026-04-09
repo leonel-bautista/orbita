@@ -352,30 +352,6 @@ section#games {
             position: relative;
             overflow: hidden;
         }
-        .carousel-track:nth-child(1) {
-            --duration: 25s;
-
-            .track-item:nth-child(1) { background-image: url('assets/images/carousel/carousel-game-1.jpg'); }
-            .track-item:nth-child(2) { background-image: url('assets/images/carousel/carousel-game-2.jpg'); }
-            .track-item:nth-child(3) { background-image: url('assets/images/carousel/carousel-game-3.jpg'); }
-            .track-item:nth-child(4) { background-image: url('assets/images/carousel/carousel-game-4.jpg'); }
-        }
-        .carousel-track:nth-child(2) {
-            --duration: 20s;
-
-            .track-item:nth-child(1) { background-image: url('assets/images/carousel/carousel-game-5.jpg'); }
-            .track-item:nth-child(2) { background-image: url('assets/images/carousel/carousel-game-6.jpg'); }
-            .track-item:nth-child(3) { background-image: url('assets/images/carousel/carousel-game-7.jpg'); }
-            .track-item:nth-child(4) { background-image: url('assets/images/carousel/carousel-game-8.jpg'); }
-        }
-        .carousel-track:nth-child(3) {
-            --duration: 15s;
-
-            .track-item:nth-child(1) { background-image: url('assets/images/carousel/carousel-game-9.jpg'); }
-            .track-item:nth-child(2) { background-image: url('assets/images/carousel/carousel-game-10.jpg'); }
-            .track-item:nth-child(3) { background-image: url('assets/images/carousel/carousel-game-11.jpg'); }
-            .track-item:nth-child(4) { background-image: url('assets/images/carousel/carousel-game-12.jpg'); }
-        }
         .carousel-track {
             .track-item {
                 aspect-ratio: 460 / 215;
@@ -552,7 +528,6 @@ section#get-started {
     align-content: center;
 
     background-color: var(--color-bg-dark);
-    background-image: url('assets/images/game-1.webp');
     background-size: 100dvh;
     background-repeat: no-repeat;
     background-position: 50dvw bottom;

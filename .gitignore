@@ -6,5 +6,5 @@ node_modules
 src/uploads/**/*
 !src/uploads/games/
 !src/uploads/users/
-!src/uploads/games/.gitkeep
-!src/uploads/users/.gitkeep
+!src/uploads/games/g-default.jpg
+!src/uploads/users/u-default.png
